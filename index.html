@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velorian Industries — Ingeniería y tecnología desde Saltillo</title>
+<meta name="description" content="Velorian Industries: vehículos de ingeniería avanzada y servicios digitales — páginas web, bots de WhatsApp e inteligencia artificial para negocios.">
+<meta property="og:title" content="Velorian Industries">
+<meta property="og:description" content="Ingeniería avanzada y servicios digitales desde Saltillo, Coahuila.">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --negro: #050608;
+    --carbon: #0c0e12;
+    --hueso: #f2efe9;
+    --hueso-dim: #9a968e;
+    --rojo: #e0242d;
+    --linea: rgba(242,239,233,0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--negro);
+    color: var(--hueso);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Lienzo 3D fijo detrás de todo */
+  #campo3d { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px;
+    z-index: 40;
+    background: linear-gradient(180deg, rgba(5,6,8,0.85), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .logo-nav { font-weight: 900; letter-spacing: 0.24em; font-size: 14px; text-transform: uppercase; }
+  .logo-nav span { color: var(--rojo); }
+  nav .links { display: flex; gap: 26px; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+  nav .links a { color: var(--hueso-dim); text-decoration: none; transition: color 0.2s; }
+  nav .links a:hover, nav .links a:focus-visible { color: var(--hueso); }
+  @media (max-width: 640px) { nav .links { display: none; } }
+
+  /* ============ HERO ============ */
+  .hero { position: relative; height: 100svh; display: flex; align-items: flex-end; overflow: hidden; z-index: 1; }
+  .hero video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(5,6,8,0.25) 0%, transparent 40%, rgba(5,6,8,0.92) 92%);
+  }
+  .hero-texto { position: relative; z-index: 2; padding: 0 28px 12vh; max-width: 1100px; margin: 0 auto; width: 100%; }
+  .hero-texto .kicker {
+    font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--hueso-dim);
+    margin-bottom: 16px; opacity: 0; animation: subirTexto 1.1s ease 1.2s forwards;
+  }
+  .hero-texto h1 {
+    font-size: clamp(44px, 9vw, 110px);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    text-transform: uppercase;
+    opacity: 0; animation: subirTexto 1.2s ease 1.5s forwards;
+  }
+  .hero-texto h1 em { font-style: normal; color: transparent; -webkit-text-stroke: 1.5px var(--hueso); }
+  .hero-texto p {
+    margin-top: 20px; max-width: 52ch; color: var(--hueso-dim); font-size: clamp(15px, 2.4vw, 18px);
+    opacity: 0; animation: subirTexto 1.2s ease 1.9s forwards;
+  }
+  @keyframes subirTexto { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+  .indicador {
+    position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 54px; background: var(--linea); overflow: hidden; z-index: 3;
+  }
+  .indicador::after {
+    content: ""; position: absolute; top: -40%; left: 0; width: 100%; height: 40%;
+    background: var(--rojo); animation: caer 2s ease-in-out infinite;
+  }
+  @keyframes caer { to { top: 110%; } }
+
+  /* ============ SECCIONES ============ */
+  main { position: relative; z-index: 1; }
+  section { padding: 110px 28px; max-width: 1100px; margin: 0 auto; }
+  .encabezado { margin-bottom: 60px; }
+  .num-seccion { font-size: 12px; letter-spacing: 0.3em; color: var(--rojo); text-transform: uppercase; display: block; margin-bottom: 14px; }
+  h2 {
+    font-size: clamp(32px, 6vw, 60px);
+    font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1;
+    text-wrap: balance;
+  }
+  .sub { color: var(--hueso-dim); margin-top: 16px; max-width: 58ch; font-size: 16px; }
+
+  .revelar { opacity: 0; transform: translateY(46px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .revelar.visto { opacity: 1; transform: none; }
+
+  /* ---- Vehículos: paneles cinematográficos ---- */
+  .flota { display: grid; gap: 26px; }
+  .nave {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 16/8.5;
+    border: 1px solid var(--linea);
+    cursor: pointer;
+  }
+  @media (max-width: 700px) { .nave { aspect-ratio: 4/5; } }
+  .nave video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    transition: transform 1.2s ease;
+  }
+  .nave:hover video { transform: scale(1.1); }
+  .nave .velo {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(5,6,8,0.9) 100%);
+  }
+  .nave .info {
+    position: absolute; left: 26px; right: 26px; bottom: 22px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 14px;
+  }
+  .nave h3 { font-size: clamp(24px, 4.5vw, 42px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1; }
+  .nave .clase { font-size: 11.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--hueso-dim); display: block; margin-bottom: 6px; }
+  .nave .dato { text-align: right; font-size: 12.5px; color: var(--hueso-dim); white-space: nowrap; }
+  .nave .dato b { display: block; color: var(--hueso); font-size: 19px; font-weight: 800; }
+
+  /* ---- Servicios ---- */
+  .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: var(--linea); border: 1px solid var(--linea); }
+  .servicio {
+    background: var(--carbon);
+    padding: 34px 28px;
+    transition: background 0.3s ease;
+    position: relative;
+  }
+  .servicio:hover { background: #12151c; }
+  .servicio::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 0; height: 2px;
+    background: var(--rojo); transition: width 0.4s ease;
+  }
+  .servicio:hover::before { width: 100%; }
+  .servicio .icono { font-size: 26px; margin-bottom: 18px; display: block; }
+  .servicio h3 { font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .servicio p { font-size: 14px; color: var(--hueso-dim); margin-bottom: 16px; }
+  .servicio .precio { font-size: 13px; color: var(--hueso); font-weight: 700; letter-spacing: 0.04em; }
+  .servicio .precio span { color: var(--rojo); }
+
+  /* ---- Manifiesto ---- */
+  .manifiesto { text-align: center; max-width: 850px; }
+  .manifiesto blockquote {
+    font-size: clamp(22px, 4.4vw, 38px);
+    font-weight: 300; line-height: 1.35; text-wrap: balance;
+  }
+  .manifiesto blockquote b { font-weight: 800; }
+  .manifiesto cite { display: block; margin-top: 26px; font-style: normal; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--hueso-dim); }
+
+  /* ---- Contacto ---- */
+  .contacto { text-align: center; padding-bottom: 130px; }
+  .contacto h2 { margin-bottom: 14px; }
+  .contacto p { color: var(--hueso-dim); margin-bottom: 36px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 11px;
+    padding: 18px 40px;
+    font-size: 15px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none;
+    color: var(--negro); background: var(--hueso);
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .btn:hover { background: #fff; }
+  .btn:active { transform: scale(0.97); }
+  .btn.rojo { background: var(--rojo); color: #fff; }
+  .btn svg { width: 20px; height: 20px; fill: currentColor; }
+  .botones-contacto { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--linea);
+    padding: 34px 28px 46px;
+    text-align: center;
+    font-size: 12.5px; color: var(--hueso-dim);
+  }
+  footer b { color: var(--hueso); letter-spacing: 0.16em; text-transform: uppercase; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .hero-texto .kicker, .hero-texto h1, .hero-texto p { opacity: 1; }
+    .revelar { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="campo3d" aria-hidden="true"></canvas>
+
+<nav>
+  <div class="logo-nav">Velorian<span>★</span>Industries</div>
+  <div class="links">
+    <a href="#vehiculos">Vehículos</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <video autoplay muted playsinline id="videoLogo">
+    <source src="assets/logo-reveal.mp4" type="video/mp4">
+  </video>
+  <div class="hero-texto">
+    <div class="kicker">Saltillo, Coahuila — México</div>
+    <h1>Ingeniería que <em>no pide permiso</em></h1>
+    <p>Velorian Industries diseña vehículos de siguiente generación y construye la tecnología digital que hace crecer negocios reales, hoy.</p>
+  </div>
+  <div class="indicador"></div>
+</header>
+
+<main>
+  <section id="vehiculos">
+    <div class="encabezado revelar">
+      <span class="num-seccion">01 — División de ingeniería</span>
+      <h2>La flota</h2>
+      <p class="sub">Conceptos en desarrollo activo, con solicitudes de patente en proceso ante el IMPI. Cada uno diseñado desde cero en Saltillo.</p>
+    </div>
+    <div class="flota">
+      <div class="nave revelar" data-video>
+        <video muted loop playsinline preload="metadata"><source src="assets/gheopardo.mp4" type="video/mp4"></video>
+        <div class="velo"></div>
+        <div class="info">
+          <div><span class="clase">Hypercar</span><h3>Gheopardo</h3></div>
+          <div class="dato"><b>1,700 HP</b>0–100 en &lt;2 s</div>
+        </div>
+      </div>
+      <div class="nave revelar" data-video>
+        <video muted loop playsinline preload="metadata"><source src="assets/golondrina.mp4" type="video/mp4"></video>
+        <div class="velo"></div>
+        <div class="info">
+          <div><span class="clase">VTOL eléctrico</span><h3>La Golondrina</h3></div>
+          <div class="dato"><b>3 modos</b>tierra · hover · vuelo</div>
+        </div>
+      </div>
+      <div class="nave revelar" data-video>
+        <video muted loop playsinline preload="metadata"><source src="assets/arelios.mp4" type="video/mp4"></video>
+        <div class="velo"></div>
+        <div class="info">
+          <div><span class="clase">Multimodal anfibio</span><h3>Arelios</h3></div>
+          <div class="dato"><b>3 medios</b>tierra · agua · profundidad</div>
+        </div>
+      </div>
+      <div class="nave revelar" data-video>
+        <video muted loop playsinline preload="metadata"><source src="assets/scorpion.mp4" type="video/mp4"></video>
+        <div class="velo"></div>
+        <div class="info">
+          <div><span class="clase">Gran turismo</span><h3>Scorpion RS</h3></div>
+          <div class="dato"><b>Twin-turbo</b>aerodinámica activa</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="manifiesto revelar">
+    <blockquote>"No construimos para el mercado que existe. <b>Construimos el que viene.</b>"</blockquote>
+    <cite>Santiago Cernuda — Cofundador</cite>
+  </section>
+
+  <section id="servicios">
+    <div class="encabezado revelar">
+      <span class="num-seccion">02 — División digital</span>
+      <h2>Lo que hacemos por tu negocio</h2>
+      <p class="sub">La misma ingeniería que ponemos en nuestros vehículos, aplicada a que tu negocio venda más. Resultados en días, no en meses.</p>
+    </div>
+    <div class="servicios-grid revelar">
+      <div class="servicio">
+        <span class="icono">◆</span>
+        <h3>Páginas web</h3>
+        <p>Sitios con diseño de autor y animación propia — te enseñamos el tuyo funcionando antes de que pagues un peso.</p>
+        <div class="precio">Desde <span>$8,000 MXN</span></div>
+      </div>
+      <div class="servicio">
+        <span class="icono">◆</span>
+        <h3>Bots de WhatsApp</h3>
+        <p>Tu negocio contesta solo, 24 horas: preguntas, precios, citas. Con inteligencia artificial real.</p>
+        <div class="precio"><span>$2,000</span> + $500/mes</div>
+      </div>
+      <div class="servicio">
+        <span class="icono">◆</span>
+        <h3>Sitios premium 3D</h3>
+        <p>Experiencias interactivas con video y 3D — como esta página. Para marcas que quieren imponerse.</p>
+        <div class="precio">Desde <span>$15,000 MXN</span></div>
+      </div>
+      <div class="servicio">
+        <span class="icono">◆</span>
+        <h3>Contenido y redes</h3>
+        <p>Video e imagen con IA de última generación para que tu marca aparezca todos los días.</p>
+        <div class="precio">Planes <span>a medida</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contacto" id="contacto">
+    <div class="revelar">
+      <span class="num-seccion">03 — Hablemos</span>
+      <h2>Tu negocio, en otro nivel</h2>
+      <p>Escríbenos y te enseñamos una propuesta hecha para ti — sin compromiso.</p>
+      <div class="botones-contacto">
+        <a class="btn rojo" href="mailto:luisantiago.gonzalez5@gmail.com">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Escríbenos
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <b>Velorian ★ Industries</b><br>
+  Saltillo, Coahuila, México · Fundada por Santiago Cernuda y Ricardo Treviño<br>
+  © 2026 Velorian Industries. Vehículos mostrados: conceptos de diseño en desarrollo.
+</footer>
+
+<script src="assets/three.min.js"></script>
+<script>
+(function () {
+  var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Hero: el video del logo se revela una vez y se queda en el último cuadro
+  var vLogo = document.getElementById('videoLogo');
+  vLogo.addEventListener('ended', function () { vLogo.pause(); });
+
+  // ---- Revelado al hacer scroll
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visto'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.revelar').forEach(function (el) { obs.observe(el); });
+
+  // ---- Videos de la flota: solo reproducen cuando están en pantalla
+  var obsVid = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target.querySelector('video');
+      if (!v) return;
+      if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); }
+    });
+  }, { threshold: 0.35 });
+  document.querySelectorAll('[data-video]').forEach(function (el) { obsVid.observe(el); });
+
+  // ---- Campo de partículas 3D interactivo (Three.js, reacciona al mouse)
+  if (reducido || typeof THREE === 'undefined') return;
+
+  var lienzo = document.getElementById('campo3d');
+  var renderer = new THREE.WebGLRenderer({ canvas: lienzo, alpha: true, antialias: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  var escena = new THREE.Scene();
+  var camara = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+  camara.position.z = 14;
+
+  var N = 4200;
+  var posiciones = new Float32Array(N * 3);
+  var base = new Float32Array(N * 3);
+  for (var i = 0; i < N; i++) {
+    var x = (Math.random() - 0.5) * 46;
+    var y = (Math.random() - 0.5) * 30;
+    var z = (Math.random() - 0.5) * 18;
+    posiciones[i * 3] = base[i * 3] = x;
+    posiciones[i * 3 + 1] = base[i * 3 + 1] = y;
+    posiciones[i * 3 + 2] = base[i * 3 + 2] = z;
+  }
+  var geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(posiciones, 3));
+
+  var colores = new Float32Array(N * 3);
+  for (var j = 0; j < N; j++) {
+    // 6% de puntos rojos Velorian, el resto hueso tenue
+    if (Math.random() < 0.06) { colores[j*3] = 0.88; colores[j*3+1] = 0.14; colores[j*3+2] = 0.18; }
+    else { var g = 0.55 + Math.random() * 0.35; colores[j*3] = g; colores[j*3+1] = g * 0.98; colores[j*3+2] = g * 0.93; }
+  }
+  geo.setAttribute('color', new THREE.BufferAttribute(colores, 3));
+
+  var material = new THREE.PointsMaterial({ size: 0.045, vertexColors: true, transparent: true, opacity: 0.75, depthWrite: false });
+  var puntos = new THREE.Points(geo, material);
+  escena.add(puntos);
+
+  var mouse = { x: 0, y: 0 }, objetivo = { x: 0, y: 0 };
+  window.addEventListener('pointermove', function (e) {
+    objetivo.x = (e.clientX / window.innerWidth - 0.5) * 2;
+    objetivo.y = (e.clientY / window.innerHeight - 0.5) * 2;
+  }, { passive: true });
+
+  window.addEventListener('resize', function () {
+    camara.aspect = window.innerWidth / window.innerHeight;
+    camara.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  var t = 0;
+  function cuadro() {
+    requestAnimationFrame(cuadro);
+    t += 0.0035;
+    // inercia del mouse
+    mouse.x += (objetivo.x - mouse.x) * 0.045;
+    mouse.y += (objetivo.y - mouse.y) * 0.045;
+
+    var pos = geo.attributes.position.array;
+    for (var k = 0; k < N; k++) {
+      var bx = base[k * 3], by = base[k * 3 + 1];
+      // ondulación lenta de fondo
+      pos[k * 3 + 2] = base[k * 3 + 2] + Math.sin(t * 2 + bx * 0.35 + by * 0.22) * 1.1;
+    }
+    geo.attributes.position.needsUpdate = true;
+
+    // el campo entero gira y se inclina siguiendo el mouse (parallax 3D)
+    puntos.rotation.y = mouse.x * 0.22 + t * 0.05;
+    puntos.rotation.x = mouse.y * 0.16;
+    camara.position.x = mouse.x * 0.8;
+    camara.position.y = -mouse.y * 0.6;
+    camara.lookAt(0, 0, 0);
+
+    renderer.render(escena, camara);
+  }
+  cuadro();
+})();
+</script>
+
+</body>
+</html>
