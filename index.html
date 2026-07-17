@@ -23,8 +23,9 @@
   /* ================= NAV / PESTAÑAS ================= */
   nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 26px;background:linear-gradient(180deg,rgba(8,9,11,0.92),rgba(8,9,11,0.55) 70%,transparent);backdrop-filter:blur(10px)}
   .marca{display:flex;align-items:center;gap:10px;cursor:pointer}
-  .marca img{height:22px;filter:invert(1)}
-  .marca span{font-size:12.5px;font-weight:750;letter-spacing:0.22em;text-transform:uppercase}
+  /* wordmark completo en blanco puro: invert vuelve blancas las letras negras
+     y mix-blend-screen hace desaparecer el fondo (negro tras invertir) */
+  .marca .wordmark{height:34px;filter:invert(1);mix-blend-mode:screen}
   .tabs{display:flex;gap:4px;background:rgba(245,244,240,0.05);border:1px solid var(--linea);border-radius:100px;padding:4px;overflow-x:auto;max-width:62vw}
   .tab{border:none;background:transparent;color:var(--gris);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:9px 16px;border-radius:100px;cursor:pointer;white-space:nowrap;transition:all .3s}
   .tab:hover{color:var(--blanco)}
@@ -46,13 +47,13 @@
   .metal i{position:absolute;inset:1px;border-radius:11px;background:linear-gradient(180deg,#fffddd,#856807 55%,#fff1b3)}
   .metal b{position:relative;z-index:2;margin:1px;display:inline-flex;align-items:center;gap:9px;padding:13px 30px;border-radius:10px;background:linear-gradient(180deg,#ffeba1,#9b873f);color:#3b2e07;font-size:13px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;text-shadow:0 1px 0 rgba(255,253,229,.5);font-style:normal}
 
-  /* ================= HERO INMERSIVO (scroll expande el video) ================= */
-  #vista-inicio .expansor{height:260vh;position:relative}
-  .fijo{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-  .fijo .fondo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s linear}
-  .fijo .velo-osc{position:absolute;inset:0;background:rgba(8,9,11,0.45)}
-  .marco-video{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.65);will-change:width,height}
-  .marco-video video{width:100%;height:100%;object-fit:cover;display:block}
+  /* ================= HERO INMERSIVO (el video del logo abre; el scroll revela el emblema sobre negro) ================= */
+  #vista-inicio .expansor{height:260vh;position:relative;background:#000}
+  .fijo{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
+  .fondo-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:opacity,transform}
+  .fijo .velo-osc{position:absolute;inset:0;background:rgba(0,0,0,0.22)}
+  .marco-emblema{position:relative;z-index:4;width:min(320px,58vw);opacity:0;will-change:transform,opacity;filter:drop-shadow(0 30px 90px rgba(0,0,0,.85))}
+  .marco-emblema img{width:100%;display:block}
   .titulo-partido{position:absolute;z-index:5;width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;mix-blend-mode:difference;pointer-events:none}
   .titulo-partido span{font-size:clamp(38px,8.5vw,96px);font-weight:800;letter-spacing:0.04em;text-transform:uppercase;line-height:1;will-change:transform}
   .pista-scroll{position:absolute;bottom:36px;z-index:6;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:var(--blanco);opacity:.85;animation:flotar 2.4s ease-in-out infinite}
@@ -161,7 +162,7 @@
 
   /* ================= ASISTENTE ================= */
   #burbuja-velo{position:fixed;right:20px;bottom:20px;z-index:70;width:60px;height:60px;border-radius:50%;border:1.5px solid var(--oro);background:radial-gradient(circle at 35% 30%,#1c1a12,#0b0a07);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(0,0,0,.55)}
-  #burbuja-velo img{width:30px;filter:drop-shadow(0 0 6px rgba(212,179,106,.6))}
+  #burbuja-velo img{width:38px;filter:invert(1);mix-blend-mode:screen}
   #chat-velo{position:fixed;right:20px;bottom:92px;z-index:70;width:min(360px,calc(100vw - 40px));max-height:480px;background:#0d0e12;border:1px solid var(--linea);border-radius:20px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.65)}
   #chat-velo.abierto{display:flex}
   #chat-velo .cab{padding:16px 18px;border-bottom:1px solid var(--linea);display:flex;align-items:center;gap:10px}
@@ -202,7 +203,7 @@
 </svg>
 
 <nav>
-  <div class="marca" data-tab="inicio"><img src="assets/wordmark-star.jpg" alt=""><span>Velorian</span></div>
+  <div class="marca" data-tab="inicio"><img class="wordmark" src="assets/wordmark-completo.png" alt="Velorian Industries"></div>
   <div class="tabs" role="tablist">
     <button class="tab activa" data-tab="inicio">Inicio</button>
     <button class="tab" data-tab="vision">Visión</button>
@@ -220,14 +221,14 @@
 <div class="vista activa" id="vista-inicio">
   <div class="expansor" id="expansor">
     <div class="fijo">
-      <img class="fondo-img" id="fondoHero" src="assets/hypercar-tunel.png" alt="">
+      <video class="fondo-video" id="videoFondo" autoplay muted loop playsinline src="assets/logo-reveal.mp4"></video>
       <div class="velo-osc"></div>
       <div class="titulo-partido" id="tituloPartido">
         <span id="palabra1">Velorian</span>
         <span id="palabra2">Industries</span>
       </div>
-      <div class="marco-video" id="marcoVideo">
-        <video autoplay muted loop playsinline src="assets/logo-reveal.mp4"></video>
+      <div class="marco-emblema" id="marcoEmblema">
+        <img src="assets/emblema.png" alt="Emblema Velorian">
       </div>
       <div class="pista-scroll" id="pistaScroll">Desliza para entrar</div>
     </div>
@@ -315,8 +316,8 @@
         <h3>Páginas web</h3>
         <p class="sub-item">Sitios de autor con animación propia — te enseñamos el tuyo antes de pagar.</p>
         <span class="precio-tag">Desde $8,000 MXN</span>
-        <div class="pop a"><img src="assets/gheopardo-oro.png" alt=""></div>
-        <div class="pop b"><img src="assets/hypercar-tunel.png" alt=""></div>
+        <div class="pop a"><img src="assets/captura-espanola.jpg" alt="Demo real: La Española"></div>
+        <div class="pop b"><img src="assets/captura-periquin.jpg" alt="Demo real: Periquín"></div>
       </div>
       <div class="item-reveal" data-tab="precios">
         <h3>Bots de WhatsApp</h3>
@@ -435,7 +436,7 @@
   <div>© 2026 · Patente en trámite ante el IMPI · Todos los derechos reservados</div>
 </footer>
 
-<button id="burbuja-velo" aria-label="Abrir asistente"><img src="assets/emblema.png" alt=""></button>
+<button id="burbuja-velo" aria-label="Abrir asistente"><img src="assets/wordmark-star.jpg" alt=""></button>
 <div id="chat-velo" role="dialog" aria-label="Asistente Velorian">
   <div class="cab"><img src="assets/emblema.png" alt=""><div><b>VELO</b><span>Asistente de Velorian — respuestas al instante</span></div></div>
   <div id="mensajes"></div>
@@ -470,9 +471,9 @@
   function observar(el) { obs.observe(el); }
   document.querySelectorAll('.revelar').forEach(observar);
 
-  /* ============ HERO: el video del logo crece con el scroll ============ */
-  var marco = document.getElementById('marcoVideo');
-  var fondoHero = document.getElementById('fondoHero');
+  /* ============ HERO: el video abre fullscreen; el scroll lo funde a negro y revela el emblema ============ */
+  var videoFondo = document.getElementById('videoFondo');
+  var marcoEmblema = document.getElementById('marcoEmblema');
   var p1 = document.getElementById('palabra1'), p2 = document.getElementById('palabra2');
   var pista = document.getElementById('pistaScroll');
   var expansor = document.getElementById('expansor');
@@ -481,12 +482,13 @@
     if (!document.getElementById('vista-inicio').classList.contains('activa')) return;
     var alcance = expansor.offsetHeight - window.innerHeight;
     var prog = Math.min(Math.max(window.scrollY / (alcance * 0.82), 0), 1);
-    var anchoIni = esMovil() ? 280 : 340, altoIni = esMovil() ? 380 : 420;
-    var anchoFin = window.innerWidth, altoFin = window.innerHeight;
-    marco.style.width = (anchoIni + (anchoFin - anchoIni) * prog) + 'px';
-    marco.style.height = (altoIni + (altoFin - altoIni) * prog) + 'px';
-    marco.style.borderRadius = (22 * (1 - prog)) + 'px';
-    fondoHero.style.opacity = 1 - prog;
+    // el video se desvanece y aleja suavemente hacia el negro
+    videoFondo.style.opacity = Math.max(1 - prog * 1.35, 0);
+    videoFondo.style.transform = 'scale(' + (1 + prog * 0.08) + ')';
+    // el emblema emerge del negro y toma el centro
+    var pe = Math.min(Math.max((prog - 0.25) / 0.75, 0), 1);
+    marcoEmblema.style.opacity = pe;
+    marcoEmblema.style.transform = 'scale(' + (0.4 + 0.6 * pe) + ') translateY(' + (40 * (1 - pe)) + 'px)';
     var despl = prog * (esMovil() ? 46 : 34);
     p1.style.transform = 'translateX(-' + despl + 'vw)';
     p2.style.transform = 'translateX(' + despl + 'vw)';
