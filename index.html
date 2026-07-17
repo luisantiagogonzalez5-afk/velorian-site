@@ -4,555 +4,758 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Velorian Industries</title>
-<meta name="description" content="Velorian Industries — hipervehículos de diseño de autor y tecnología digital para negocios. Saltillo, México.">
+<meta name="description" content="Velorian Industries — hipervehículos de diseño de autor y tecnología digital. Saltillo, México.">
 <meta property="og:title" content="Velorian Industries">
 <meta property="og:description" content="Gheopardo · Lafroditha · Scorpion RS · La Golondrina · Arelios">
-<meta property="og:type" content="website">
 <link rel="icon" href="assets/emblema.png" type="image/png">
 <style>
   :root {
-    --fondo: #0a0a0c;
-    --panel: #060607;
-    --blanco: #f5f5f4;
-    --gris: #8b8b93;
-    --linea: rgba(245,245,244,0.1);
-    --oro: #d4b36a;
+    --fondo:#08090b; --panel:#0e0f13; --blanco:#f5f4f0; --gris:#8e8e96;
+    --linea:rgba(245,244,240,0.11); --oro:#d4b36a; --oro-osc:#9b873f;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
-    background: var(--fondo);
-    color: var(--blanco);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
-  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;background:var(--fondo);color:var(--blanco);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.5}
+  h1,h2,h3{letter-spacing:-0.02em;text-wrap:balance}
+  h1,h2{font-weight:300;line-height:1.06}
+  h1 b,h2 b{font-weight:760}
 
-  /* ============ NAV (estilo referencia: logo · links · CTA píldora) ============ */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 30px;
-    background: linear-gradient(180deg, rgba(10,10,12,0.9), rgba(10,10,12,0));
-    backdrop-filter: blur(6px);
-  }
-  .marca { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--blanco); }
-  .marca img { height: 24px; filter: invert(1); }
-  .marca span { font-size: 13.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
-  nav .links { display: flex; gap: 28px; font-size: 13px; }
-  nav .links a { color: var(--gris); text-decoration: none; transition: color 0.2s; }
-  nav .links a:hover, nav .links a:focus-visible { color: var(--blanco); }
-  .pill {
-    display: inline-flex; align-items: center; gap: 9px;
-    padding: 11px 24px;
-    border-radius: 100px;
-    background: var(--blanco); color: var(--fondo);
-    font-size: 13.5px; font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.15s ease, background 0.2s;
-  }
-  .pill:hover { background: #fff; }
-  .pill:active { transform: scale(0.96); }
-  .pill svg { width: 17px; height: 17px; fill: currentColor; }
-  .pill.fantasma { background: transparent; color: var(--blanco); border: 1px solid var(--linea); }
-  @media (max-width: 760px) { nav .links { display: none; } }
+  /* ================= NAV / PESTAÑAS ================= */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 26px;background:linear-gradient(180deg,rgba(8,9,11,0.92),rgba(8,9,11,0.55) 70%,transparent);backdrop-filter:blur(10px)}
+  .marca{display:flex;align-items:center;gap:10px;cursor:pointer}
+  .marca img{height:22px;filter:invert(1)}
+  .marca span{font-size:12.5px;font-weight:750;letter-spacing:0.22em;text-transform:uppercase}
+  .tabs{display:flex;gap:4px;background:rgba(245,244,240,0.05);border:1px solid var(--linea);border-radius:100px;padding:4px;overflow-x:auto;max-width:62vw}
+  .tab{border:none;background:transparent;color:var(--gris);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:9px 16px;border-radius:100px;cursor:pointer;white-space:nowrap;transition:all .3s}
+  .tab:hover{color:var(--blanco)}
+  .tab.activa{background:var(--blanco);color:var(--fondo);font-weight:700}
+  .nav-der{display:flex;align-items:center;gap:10px}
+  .btn-sonido{width:38px;height:38px;border-radius:50%;border:1px solid var(--linea);background:transparent;color:var(--gris);cursor:pointer;font-size:15px;transition:all .3s}
+  .btn-sonido.on{color:var(--oro);border-color:var(--oro)}
+  @media(max-width:860px){.marca span{display:none}.tabs{max-width:74vw}}
 
-  .chip {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12.5px; color: var(--gris);
-    border: 1px solid var(--linea);
-    border-radius: 100px;
-    padding: 6px 15px;
-    margin-bottom: 22px;
-  }
-  .chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--oro); }
+  /* ================= BOTONES LÍQUIDO / METAL ================= */
+  .liquido{position:relative;display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:100px;font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blanco);text-decoration:none;border:none;cursor:pointer;background:rgba(245,244,240,0.06);overflow:hidden;transition:transform .25s,background .3s;
+    box-shadow:0 0 6px rgba(0,0,0,.25),0 2px 8px rgba(0,0,0,.35),inset 2px 2px 1px -1px rgba(255,255,255,.28),inset -2px -2px 1px -1px rgba(255,255,255,.12),inset 0 0 8px 5px rgba(255,255,255,.04)}
+  .liquido::before{content:"";position:absolute;inset:0;border-radius:100px;backdrop-filter:blur(7px) url(#vidrio);z-index:-1}
+  .liquido:hover{transform:scale(1.045);background:rgba(245,244,240,0.1)}
+  .liquido:active{transform:scale(0.97)}
+  .metal{position:relative;display:inline-flex;padding:1.5px;border-radius:12px;background:linear-gradient(180deg,#917100,#ead98f);box-shadow:0 3px 10px rgba(0,0,0,.4);cursor:pointer;text-decoration:none;transition:transform .25s cubic-bezier(.1,.4,.2,1),box-shadow .25s}
+  .metal:hover{box-shadow:0 5px 16px rgba(212,179,106,.3)}
+  .metal:active{transform:translateY(2px) scale(.99)}
+  .metal i{position:absolute;inset:1px;border-radius:11px;background:linear-gradient(180deg,#fffddd,#856807 55%,#fff1b3)}
+  .metal b{position:relative;z-index:2;margin:1px;display:inline-flex;align-items:center;gap:9px;padding:13px 30px;border-radius:10px;background:linear-gradient(180deg,#ffeba1,#9b873f);color:#3b2e07;font-size:13px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;text-shadow:0 1px 0 rgba(255,253,229,.5);font-style:normal}
 
-  h1, h2 { font-weight: 300; letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; }
-  h1 b, h2 b { font-weight: 750; }
+  /* ================= HERO INMERSIVO (scroll expande el video) ================= */
+  #vista-inicio .expansor{height:260vh;position:relative}
+  .fijo{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .fijo .fondo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s linear}
+  .fijo .velo-osc{position:absolute;inset:0;background:rgba(8,9,11,0.45)}
+  .marco-video{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.65);will-change:width,height}
+  .marco-video video{width:100%;height:100%;object-fit:cover;display:block}
+  .titulo-partido{position:absolute;z-index:5;width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;mix-blend-mode:difference;pointer-events:none}
+  .titulo-partido span{font-size:clamp(38px,8.5vw,96px);font-weight:800;letter-spacing:0.04em;text-transform:uppercase;line-height:1;will-change:transform}
+  .pista-scroll{position:absolute;bottom:36px;z-index:6;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:var(--blanco);opacity:.85;animation:flotar 2.4s ease-in-out infinite}
+  @keyframes flotar{50%{transform:translateY(-7px)}}
+  .post-hero{max-width:1100px;margin:0 auto;padding:90px 26px;text-align:center}
+  .post-hero p{font-size:clamp(19px,3.4vw,30px);font-weight:300;color:var(--gris);max-width:44ch;margin:0 auto 40px}
+  .post-hero p b{color:var(--blanco);font-weight:700}
+  .fila-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 
-  /* ============ HERO: texto + tarjeta 3D en capas ============ */
-  .hero {
-    min-height: 100svh;
-    display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    align-items: center;
-    gap: 20px;
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 110px 30px 40px;
-  }
-  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding-top: 130px; text-align: center; } .hero .chip { margin-inline: auto; } .hero .cta-row { justify-content: center; } }
-  .hero h1 { font-size: clamp(38px, 5.6vw, 68px); }
-  .hero p.baja { color: var(--gris); margin: 22px 0 30px; max-width: 46ch; font-size: 16px; }
-  @media (max-width: 900px) { .hero p.baja { margin-inline: auto; } }
-  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
-  #escena3d { width: 100%; aspect-ratio: 1/0.95; max-height: 74vh; }
+  /* ================= VISTAS (pestañas) ================= */
+  .vista{display:none;animation:aparecerVista .6s ease}
+  .vista.activa{display:block}
+  @keyframes aparecerVista{from{opacity:0;transform:translateY(18px)}to{opacity:1}}
+  .seccion{max-width:1150px;margin:0 auto;padding:130px 26px 70px}
+  .chip{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--gris);border:1px solid var(--linea);border-radius:100px;padding:6px 15px;margin-bottom:20px}
+  .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--oro)}
+  .cabeza h2{font-size:clamp(30px,5vw,54px)}
+  .cabeza p{color:var(--gris);margin-top:14px;max-width:58ch;font-size:15.5px}
+  .revelar{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s ease}
+  .revelar.visto{opacity:1;transform:none}
 
-  /* ============ CINTA MÉTRICAS ============ */
-  .metricas {
-    border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea);
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    max-width: 1240px; margin: 0 auto;
-  }
-  .metrica { padding: 26px 20px; text-align: center; border-right: 1px solid var(--linea); }
-  .metrica:last-child { border-right: none; }
-  .metrica b { display: block; font-size: clamp(22px, 3vw, 30px); font-weight: 750; font-variant-numeric: tabular-nums; }
-  .metrica span { font-size: 12px; color: var(--gris); }
+  /* ================= GOOEY + NARRADOR ================= */
+  .gooey-zona{height:200px;position:relative;display:flex;align-items:center;justify-content:center;filter:url(#umbral)}
+  .gooey-zona span{position:absolute;font-size:clamp(40px,9vw,90px);font-weight:800;letter-spacing:-0.02em;user-select:none;text-transform:uppercase}
+  .texto-emotivo{max-width:640px;margin:34px auto 0;text-align:center;font-size:clamp(16px,2.6vw,20px);font-weight:300;color:var(--gris);line-height:1.8}
+  .texto-emotivo b{color:var(--blanco);font-weight:650}
+  .narrador{max-width:420px;margin:44px auto 0;text-align:center}
+  .narrador .boton-voz{width:74px;height:74px;border-radius:50%;border:1.5px solid var(--oro);background:radial-gradient(circle at 35% 30%,rgba(212,179,106,.22),rgba(212,179,106,.05));color:var(--oro);font-size:26px;cursor:pointer;transition:all .3s;margin-bottom:14px}
+  .narrador .boton-voz:hover{transform:scale(1.07);box-shadow:0 0 34px rgba(212,179,106,.35)}
+  .narrador .boton-voz.sonando{animation:pulso 1.6s ease-in-out infinite}
+  @keyframes pulso{50%{box-shadow:0 0 44px rgba(212,179,106,.55)}}
+  .barras{height:34px;display:flex;align-items:center;justify-content:center;gap:2.5px;margin-bottom:8px}
+  .barras i{width:2.5px;height:4px;border-radius:2px;background:rgba(212,179,106,.28);transition:height .12s ease}
+  .narrador .estado{font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gris)}
+  .nota-voz{margin-top:10px;font-size:11px;color:#5a5a62}
 
-  /* ============ SECCIONES BASE ============ */
-  section { max-width: 1240px; margin: 0 auto; padding: 110px 30px 30px; }
-  .cabeza { max-width: 720px; margin-bottom: 60px; }
-  .cabeza h2 { font-size: clamp(30px, 4.6vw, 52px); }
-  .cabeza p { color: var(--gris); margin-top: 16px; font-size: 15.5px; max-width: 56ch; }
+  /* ================= LÍNEA DE TIEMPO ================= */
+  .tiempo{max-width:640px;margin:60px auto 0;border-left:1px solid var(--linea);padding-left:34px;display:grid;gap:34px}
+  .hito{position:relative}
+  .hito::before{content:"";position:absolute;left:-39px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--oro)}
+  .hito .anio{font-size:12px;letter-spacing:0.28em;color:var(--oro);text-transform:uppercase}
+  .hito h3{font-size:19px;font-weight:750;margin:5px 0 4px}
+  .hito p{color:var(--gris);font-size:14px}
 
-  .revelar { opacity: 0; transform: translateY(36px); transition: opacity 0.85s ease, transform 0.85s ease; }
-  .revelar.visto { opacity: 1; transform: none; }
+  /* ================= CONCEPT CARS ================= */
+  .flota-grid{display:grid;gap:18px;margin-top:50px}
+  .modelo{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--linea);aspect-ratio:16/8;background:var(--panel)}
+  @media(max-width:720px){.modelo{aspect-ratio:4/4.6}}
+  .modelo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 6s ease}
+  .modelo:hover video{transform:scale(1.07)}
+  .modelo .velo{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,7,0.25),transparent 40%,rgba(6,6,7,0.92))}
+  .modelo .contenido{position:absolute;left:24px;right:24px;bottom:20px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
+  .modelo .tag{font-size:11px;color:var(--gris);letter-spacing:0.16em;text-transform:uppercase;display:block;margin-bottom:5px}
+  .modelo h3{font-size:clamp(26px,4.4vw,44px);font-weight:760;line-height:1}
+  .modelo .specs{display:flex;gap:20px;text-align:right;flex-shrink:0}
+  .modelo .spec b{display:block;font-size:clamp(15px,2vw,21px);font-weight:760;font-variant-numeric:tabular-nums}
+  .modelo .spec span{font-size:10px;color:var(--gris);letter-spacing:0.1em;text-transform:uppercase}
+  .modelo .ficha{position:absolute;top:16px;right:16px;font-size:12px;color:var(--blanco);background:rgba(8,9,11,0.55);backdrop-filter:blur(6px);border:1px solid var(--linea);border-radius:100px;padding:8px 16px;cursor:pointer}
+  .legal{margin-top:40px;text-align:center;border:1px solid rgba(212,179,106,.3);border-radius:14px;padding:20px 26px;background:rgba(212,179,106,.05)}
+  .legal b{color:var(--oro);letter-spacing:0.18em;text-transform:uppercase;font-size:12.5px;display:block;margin-bottom:6px}
+  .legal span{font-size:12px;color:var(--gris)}
 
-  /* ============ FLOTA ============ */
-  .flota-grid { display: grid; gap: 18px; }
-  .modelo {
-    position: relative; border-radius: 20px; overflow: hidden;
-    border: 1px solid var(--linea);
-    aspect-ratio: 16/8;
-    background: var(--panel);
-  }
-  @media (max-width: 720px) { .modelo { aspect-ratio: 4/4.6; } }
-  .modelo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease; }
-  .modelo:hover video { transform: scale(1.07); }
-  .modelo .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,7,0.28), transparent 40%, rgba(6,6,7,0.92)); }
-  .modelo .contenido {
-    position: absolute; left: 26px; right: 26px; bottom: 22px;
-    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
-  }
-  .modelo .tag { font-size: 11.5px; color: var(--gris); letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 6px; }
-  .modelo h3 { font-size: clamp(26px, 4.4vw, 44px); font-weight: 750; letter-spacing: -0.02em; line-height: 1; }
-  .modelo .specs { display: flex; gap: 22px; text-align: right; flex-shrink: 0; }
-  .modelo .spec b { display: block; font-size: clamp(16px, 2.2vw, 22px); font-weight: 750; font-variant-numeric: tabular-nums; }
-  .modelo .spec span { font-size: 10.5px; color: var(--gris); letter-spacing: 0.1em; text-transform: uppercase; }
-  .modelo .ficha {
-    position: absolute; top: 18px; right: 18px;
-    font-size: 12px; color: var(--blanco);
-    background: rgba(10,10,12,0.5); backdrop-filter: blur(6px);
-    border: 1px solid var(--linea); border-radius: 100px;
-    padding: 8px 16px; cursor: pointer;
-    transition: background 0.2s;
-  }
-  .modelo .ficha:hover { background: rgba(10,10,12,0.8); }
+  /* ================= SERVICIOS (reveal list + panel inclinado) ================= */
+  .lista-reveal{margin-top:24px}
+  .item-reveal{position:relative;padding:26px 0;border-bottom:1px solid var(--linea);cursor:pointer}
+  .item-reveal h3{font-size:clamp(30px,6.5vw,64px);font-weight:850;text-transform:uppercase;letter-spacing:-0.02em;transition:opacity .45s,transform .45s;line-height:1.02}
+  .item-reveal:hover h3{opacity:.32;transform:translateX(14px)}
+  .item-reveal .sub-item{color:var(--gris);font-size:13.5px;margin-top:6px;max-width:52ch}
+  .item-reveal .pop{position:absolute;right:8%;top:50%;width:104px;height:130px;border-radius:12px;overflow:hidden;transform:translateY(-50%) scale(0) rotate(0deg);opacity:0;transition:all .5s cubic-bezier(.2,.8,.2,1);pointer-events:none;box-shadow:0 20px 50px rgba(0,0,0,.55);z-index:3}
+  .item-reveal .pop img{width:100%;height:100%;object-fit:cover}
+  .item-reveal:hover .pop.a{transform:translateY(-58%) scale(1) rotate(-7deg);opacity:1}
+  .item-reveal:hover .pop.b{transform:translateY(-42%) translateX(52px) scale(1) rotate(9deg);opacity:1;transition-delay:.08s}
+  .item-reveal .precio-tag{position:absolute;left:0;bottom:10px;font-size:12px;color:var(--oro);letter-spacing:0.1em}
 
-  /* ============ FUNDADORES (referencia: Meet the Founders) ============ */
-  .fundadores-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-  .fundador {
-    border: 1px solid var(--linea); border-radius: 20px;
-    padding: 40px 30px;
-    background: linear-gradient(170deg, rgba(245,245,244,0.035), transparent 55%);
-  }
-  .fundador .retrato {
-    width: 74px; height: 74px; border-radius: 50%;
-    background: linear-gradient(140deg, #1c1c20, #101013);
-    border: 1px solid var(--linea);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; font-weight: 750; color: var(--gris);
-    margin-bottom: 22px;
-  }
-  .fundador h3 { font-size: 21px; font-weight: 750; }
-  .fundador .rol { color: var(--oro); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; margin: 6px 0 14px; }
-  .fundador p { color: var(--gris); font-size: 14px; }
+  .escenario{perspective:1100px;margin-top:90px}
+  .panel-3d{max-width:900px;margin:0 auto;border:3px solid #3a3a40;border-radius:26px;background:#17181c;padding:14px;box-shadow:0 60px 120px rgba(0,0,0,.6);transform:rotateX(22deg) scale(.94);transition:transform .2s ease-out;will-change:transform}
+  .panel-3d .pantalla{background:#0b0c0f;border-radius:16px;padding:26px;min-height:380px}
+  .pantalla .fila-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+  .kpi{background:#121319;border:1px solid var(--linea);border-radius:12px;padding:16px}
+  .kpi b{font-size:22px;font-weight:800;display:block;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:11px;color:var(--gris)}
+  .kpi .delta{color:#5fb37e;font-size:11px;font-weight:700}
+  #grafica{width:100%;height:190px;display:block}
+  .pantalla .pie-panel{display:flex;justify-content:space-between;margin-top:14px;font-size:11px;color:var(--gris)}
 
-  /* ============ DIVISIÓN DIGITAL ============ */
-  .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
-  .servicio {
-    border: 1px solid var(--linea); border-radius: 20px;
-    padding: 32px 28px;
-    background: var(--panel);
-    transition: border-color 0.3s, transform 0.3s;
-  }
-  .servicio:hover { border-color: rgba(212,179,106,0.45); transform: translateY(-4px); }
-  .servicio .n { font-size: 12px; color: var(--gris); font-variant-numeric: tabular-nums; }
-  .servicio h3 { font-size: 19px; font-weight: 750; margin: 14px 0 8px; }
-  .servicio p { color: var(--gris); font-size: 13.5px; margin-bottom: 20px; }
-  .servicio .precio { font-size: 14px; font-weight: 700; }
-  .servicio .precio span { color: var(--oro); }
+  /* ================= PRECIOS ================= */
+  .toggle-zona{display:flex;align-items:center;justify-content:center;gap:12px;margin:36px 0 46px}
+  .switch{position:relative;width:52px;height:28px;border-radius:100px;background:rgba(245,244,240,.12);border:1px solid var(--linea);cursor:pointer;transition:background .3s}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--blanco);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .switch.on{background:var(--oro)}
+  .switch.on::after{transform:translateX(24px)}
+  .toggle-zona span{font-size:13.5px;color:var(--gris)}
+  .toggle-zona span.act{color:var(--blanco);font-weight:700}
+  .planes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:stretch}
+  .plan{position:relative;border:1px solid var(--linea);border-radius:20px;padding:34px 28px;background:var(--panel);display:flex;flex-direction:column;transition:transform .5s ease,border-color .4s}
+  .plan.popular{border:2px solid var(--oro);transform:scale(1.03);background:linear-gradient(170deg,rgba(212,179,106,.07),var(--panel) 55%)}
+  .plan .badge{position:absolute;top:-1px;right:-1px;background:var(--oro);color:#2a2005;font-size:11px;font-weight:800;letter-spacing:0.08em;padding:6px 14px;border-radius:0 18px 0 14px}
+  .plan .nom{font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gris)}
+  .plan .monto{margin:18px 0 2px;font-size:44px;font-weight:850;font-variant-numeric:tabular-nums;letter-spacing:-0.02em}
+  .plan .monto small{font-size:15px;font-weight:500;color:var(--gris)}
+  .plan .desc-precio{font-size:12px;color:var(--gris);margin-bottom:20px}
+  .plan ul{list-style:none;display:grid;gap:9px;margin-bottom:26px;text-align:left}
+  .plan li{font-size:13.5px;color:var(--gris);padding-left:22px;position:relative}
+  .plan li::before{content:"✓";position:absolute;left:0;color:var(--oro);font-weight:800}
+  .plan .cta-plan{margin-top:auto}
 
-  /* ============ COLECCIÓN ============ */
-  .postres { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-  .postres a { display: block; overflow: hidden; border-radius: 16px; border: 1px solid var(--linea); }
-  .postres img { width: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; transition: transform 0.7s ease; }
-  .postres a:hover img { transform: scale(1.05); }
+  /* ================= ASISTENTE ================= */
+  #burbuja-velo{position:fixed;right:20px;bottom:20px;z-index:70;width:60px;height:60px;border-radius:50%;border:1.5px solid var(--oro);background:radial-gradient(circle at 35% 30%,#1c1a12,#0b0a07);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(0,0,0,.55)}
+  #burbuja-velo img{width:30px;filter:drop-shadow(0 0 6px rgba(212,179,106,.6))}
+  #chat-velo{position:fixed;right:20px;bottom:92px;z-index:70;width:min(360px,calc(100vw - 40px));max-height:480px;background:#0d0e12;border:1px solid var(--linea);border-radius:20px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.65)}
+  #chat-velo.abierto{display:flex}
+  #chat-velo .cab{padding:16px 18px;border-bottom:1px solid var(--linea);display:flex;align-items:center;gap:10px}
+  #chat-velo .cab img{width:22px}
+  #chat-velo .cab b{font-size:14px}
+  #chat-velo .cab span{font-size:11px;color:var(--gris);display:block}
+  #mensajes{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:200px}
+  .msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.5}
+  .msg.velo{background:rgba(212,179,106,.1);border:1px solid rgba(212,179,106,.2);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.yo{background:rgba(245,244,240,.1);align-self:flex-end;border-bottom-right-radius:4px}
+  #chat-velo form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--linea)}
+  #chat-velo input{flex:1;background:rgba(245,244,240,.06);border:1px solid var(--linea);border-radius:100px;padding:11px 16px;color:var(--blanco);font-size:13.5px;outline:none}
+  #chat-velo button{border:none;background:var(--oro);color:#2a2005;border-radius:100px;padding:0 18px;font-weight:800;cursor:pointer}
 
-  /* ============ CTA FINAL ============ */
-  .final {
-    text-align: center;
-    padding: 130px 30px 120px;
-    position: relative; overflow: hidden;
-  }
-  .final img.fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.28; }
-  .final .velo { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 80% at 50% 100%, rgba(10,10,12,0.4), var(--fondo) 75%); }
-  .final .interior { position: relative; z-index: 2; }
-  .final h2 { font-size: clamp(32px, 5.4vw, 58px); margin-bottom: 14px; }
-  .final p { color: var(--gris); margin-bottom: 36px; }
-  .final .cta-row { justify-content: center; }
-  .pill.wa { background: #25d366; color: #06130a; }
+  /* ================= CTA FINAL / FOOTER / LIGHTBOX ================= */
+  .final{text-align:center;padding:110px 26px;position:relative;overflow:hidden}
+  .final img.fondo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.25}
+  .final .velo{position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 100%,rgba(8,9,11,.35),var(--fondo) 78%)}
+  .final .interior{position:relative;z-index:2}
+  footer{border-top:1px solid var(--linea);padding:34px 26px 46px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;max-width:1150px;margin:0 auto;font-size:12px;color:var(--gris)}
+  footer img{height:18px;filter:invert(1)}
+  footer a{color:var(--gris);text-decoration:none}
+  footer a:hover{color:var(--blanco)}
+  #lightbox{position:fixed;inset:0;z-index:90;background:rgba(6,6,7,.94);display:none;align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
+  #lightbox.abierto{display:flex}
+  #lightbox img{max-width:min(92vw,600px);max-height:90vh;object-fit:contain;border-radius:12px}
 
-  footer {
-    border-top: 1px solid var(--linea);
-    padding: 36px 30px 50px;
-    display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;
-    max-width: 1240px; margin: 0 auto;
-    font-size: 12.5px; color: var(--gris);
-  }
-  footer .marca img { height: 20px; }
-  footer a { color: var(--gris); text-decoration: none; }
-  footer a:hover { color: var(--blanco); }
-
-  /* ============ LIGHTBOX ============ */
-  #lightbox {
-    position: fixed; inset: 0; z-index: 90;
-    background: rgba(6,6,7,0.94);
-    display: none; align-items: center; justify-content: center;
-    padding: 30px; cursor: zoom-out;
-  }
-  #lightbox.abierto { display: flex; }
-  #lightbox img { max-width: min(92vw, 620px); max-height: 90vh; object-fit: contain; border-radius: 12px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .revelar { opacity: 1; transform: none; }
-  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.revelar{opacity:1;transform:none}.panel-3d{transform:none}}
 </style>
 </head>
 <body>
 
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+  <defs>
+    <filter id="vidrio"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" result="n"/><feGaussianBlur in="n" stdDeviation="2" result="nb"/><feDisplacementMap in="SourceGraphic" in2="nb" scale="40"/></filter>
+    <filter id="umbral"><feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140"/></filter>
+  </defs>
+</svg>
+
 <nav>
-  <a class="marca" href="#">
-    <img src="assets/wordmark-star.jpg" alt="">
-    <span>Velorian</span>
-  </a>
-  <div class="links">
-    <a href="#flota">La flota</a>
-    <a href="#fundadores">Fundadores</a>
-    <a href="#digital">Servicios</a>
-    <a href="#coleccion">Colección</a>
+  <div class="marca" data-tab="inicio"><img src="assets/wordmark-star.jpg" alt=""><span>Velorian</span></div>
+  <div class="tabs" role="tablist">
+    <button class="tab activa" data-tab="inicio">Inicio</button>
+    <button class="tab" data-tab="vision">Visión</button>
+    <button class="tab" data-tab="historia">Historia</button>
+    <button class="tab" data-tab="concept">Concept Cars</button>
+    <button class="tab" data-tab="servicios">Servicios</button>
+    <button class="tab" data-tab="precios">Precios</button>
   </div>
-  <a class="pill" href="https://wa.me/528444511106" rel="noopener">Hablemos</a>
+  <div class="nav-der">
+    <button class="btn-sonido" id="btnSonido" title="Sonido de la página">♪</button>
+  </div>
 </nav>
 
-<header class="hero">
-  <div>
-    <div class="chip">Velorian Industries · Saltillo, México</div>
-    <h1>Ingeniería <b>audaz</b> para un mundo que <b>apenas viene</b>.</h1>
-    <p class="baja">Diseñamos hipervehículos de autor y construimos la tecnología digital que hace crecer negocios reales — con la misma obsesión por el detalle.</p>
-    <div class="cta-row">
-      <a class="pill" href="#flota">Conocer la flota</a>
-      <a class="pill fantasma" href="#digital">Servicios digitales</a>
+<!-- ============================================================ INICIO -->
+<div class="vista activa" id="vista-inicio">
+  <div class="expansor" id="expansor">
+    <div class="fijo">
+      <img class="fondo-img" id="fondoHero" src="assets/hypercar-tunel.png" alt="">
+      <div class="velo-osc"></div>
+      <div class="titulo-partido" id="tituloPartido">
+        <span id="palabra1">Velorian</span>
+        <span id="palabra2">Industries</span>
+      </div>
+      <div class="marco-video" id="marcoVideo">
+        <video autoplay muted loop playsinline src="assets/logo-reveal.mp4"></video>
+      </div>
+      <div class="pista-scroll" id="pistaScroll">Desliza para entrar</div>
     </div>
   </div>
-  <div id="escena3d" aria-hidden="true"></div>
-</header>
-
-<div class="metricas">
-  <div class="metrica"><b>5</b><span>Vehículos de autor</span></div>
-  <div class="metrica"><b>1,700 HP</b><span>Nuestro tope — Gheopardo</span></div>
-  <div class="metrica"><b>480 km/h</b><span>La Golondrina en vuelo</span></div>
-  <div class="metrica"><b>100 m</b><span>Arelios bajo el agua</span></div>
+  <div class="post-hero revelar">
+    <p><b>Diseñamos hipervehículos</b> que todavía no existen en ningún catálogo, y construimos <b>la tecnología digital</b> que hace crecer negocios reales — con la misma obsesión.</p>
+    <div class="fila-cta">
+      <button class="liquido" data-tab="concept">Ver la flota</button>
+      <a class="metal" href="https://wa.me/528444511106" rel="noopener"><i></i><b>Hablemos →</b></a>
+    </div>
+  </div>
 </div>
 
-<section id="flota">
-  <div class="cabeza revelar">
-    <div class="chip">La flota</div>
-    <h2>Cinco máquinas. <b>Un solo lenguaje.</b></h2>
-    <p>Conceptos en desarrollo activo con solicitudes de patente en proceso. Toque cualquier ficha para ver su edición de colección.</p>
-  </div>
-  <div class="flota-grid">
-    <div class="modelo revelar" data-video>
-      <video muted loop playsinline preload="metadata"><source src="assets/gheopardo.mp4" type="video/mp4"></video>
-      <div class="velo"></div>
-      <button class="ficha" data-poster="assets/poster-gheopardo.jpg">Ficha de colección</button>
-      <div class="contenido">
-        <div><span class="tag">01 · Hypercar</span><h3>Gheopardo</h3></div>
-        <div class="specs">
-          <div class="spec"><b>1,700</b><span>HP</span></div>
-          <div class="spec"><b>3,500</b><span>Nm</span></div>
-          <div class="spec"><b>&lt;2 s</b><span>0–100</span></div>
-        </div>
-      </div>
+<!-- ============================================================ VISIÓN -->
+<div class="vista" id="vista-vision">
+  <section class="seccion" style="text-align:center">
+    <div class="chip">Visión a futuro</div>
+    <div class="gooey-zona" aria-hidden="true">
+      <span id="goo1v"></span><span id="goo2v"></span>
     </div>
-    <div class="modelo revelar" data-video>
-      <video muted loop playsinline preload="metadata"><source src="assets/lafroditha.mp4" type="video/mp4"></video>
-      <div class="velo"></div>
-      <button class="ficha" data-poster="assets/poster-lafroditha.jpg">Ficha de colección</button>
-      <div class="contenido">
-        <div><span class="tag">02 · Grand Hybrid</span><h3>Lafroditha</h3></div>
-        <div class="specs">
-          <div class="spec"><b>V12</b><span>Híbrido</span></div>
-          <div class="spec"><b>1,250+</b><span>HP</span></div>
-          <div class="spec"><b>1/50</b><span>Collector</span></div>
-        </div>
-      </div>
+    <p class="texto-emotivo revelar">Un día, un niño de Saltillo miró al cielo <b>y no pidió permiso</b>. Velorian no nació en una fábrica — nació en un cuaderno de secundaria, entre tareas y sueños que nadie más podía ver. Hoy diseñamos máquinas que vuelan, que bucean, que rugen. Mañana llevarán nuestro nombre por carreteras que todavía no existen. <b>Esto no es una empresa. Es una promesa.</b></p>
+    <div class="narrador revelar">
+      <button class="boton-voz" data-audio="assets/narracion-vision.mp3" aria-label="Escuchar narración">▶</button>
+      <div class="barras" aria-hidden="true"></div>
+      <div class="estado">Escúchalo — toca para reproducir</div>
+      <div class="nota-voz">Narrado por la inteligencia artificial de Velorian</div>
     </div>
-    <div class="modelo revelar" data-video>
-      <video muted loop playsinline preload="metadata"><source src="assets/scorpion.mp4" type="video/mp4"></video>
-      <div class="velo"></div>
-      <button class="ficha" data-poster="assets/poster-scorpion.jpg">Ficha de colección</button>
-      <div class="contenido">
-        <div><span class="tag">03 · Gran turismo</span><h3>Scorpion RS</h3></div>
-        <div class="specs">
-          <div class="spec"><b>Twin</b><span>Turbo</span></div>
-          <div class="spec"><b>Aero</b><span>Activa</span></div>
-          <div class="spec"><b>4-Tip</b><span>Escape</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="modelo revelar" data-video>
-      <video muted loop playsinline preload="metadata"><source src="assets/golondrina.mp4" type="video/mp4"></video>
-      <div class="velo"></div>
-      <button class="ficha" data-poster="assets/poster-golondrina.jpg">Ficha de colección</button>
-      <div class="contenido">
-        <div><span class="tag">04 · VTOL</span><h3>La Golondrina</h3></div>
-        <div class="specs">
-          <div class="spec"><b>1,400</b><span>HP</span></div>
-          <div class="spec"><b>480</b><span>km/h</span></div>
-          <div class="spec"><b>EDF</b><span>Distribuido</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="modelo revelar" data-video>
-      <video muted loop playsinline preload="metadata"><source src="assets/arelios.mp4" type="video/mp4"></video>
-      <div class="velo"></div>
-      <button class="ficha" data-poster="assets/poster-arelios.jpg">Ficha de colección</button>
-      <div class="contenido">
-        <div><span class="tag">05 · Multimodal</span><h3>Arelios</h3></div>
-        <div class="specs">
-          <div class="spec"><b>100 m</b><span>Prof. máx</span></div>
-          <div class="spec"><b>3</b><span>Medios</span></div>
-          <div class="spec"><b>4.2°C</b><span>H₂O</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<section id="fundadores">
-  <div class="cabeza revelar">
-    <div class="chip">Fundadores</div>
-    <h2>Los que <b>firman</b> cada máquina.</h2>
-  </div>
-  <div class="fundadores-grid revelar">
-    <div class="fundador">
-      <div class="retrato">SC</div>
-      <h3>Santiago Cernuda</h3>
-      <div class="rol">Cofundador · Diseño e ingeniería</div>
-      <p>Diseña la flota y construye los sistemas — del CAD a la inteligencia artificial que opera Velorian.</p>
+<!-- ============================================================ HISTORIA -->
+<div class="vista" id="vista-historia">
+  <section class="seccion" style="text-align:center">
+    <div class="chip">Nuestra historia</div>
+    <div class="gooey-zona" aria-hidden="true">
+      <span id="goo1h"></span><span id="goo2h"></span>
     </div>
-    <div class="fundador">
-      <div class="retrato">RT</div>
-      <h3>Ricardo Treviño</h3>
-      <div class="rol">Cofundador · Estrategia comercial</div>
-      <p>La otra mitad de la sociedad desde el principio. Ventas, alianzas y la visión de negocio.</p>
+    <p class="texto-emotivo revelar">Todo empezó con <b>dos amigos en quinto de primaria</b>, dibujando autos en la parte de atrás de un cuaderno. Sin dinero, sin oficina — solo la certeza de que algún día sería real. Años después seguimos aquí: <b>los mismos dos nombres</b>. Cada máquina lleva dentro a esos dos niños que se negaron a rendirse.</p>
+    <div class="narrador revelar">
+      <button class="boton-voz" data-audio="assets/narracion-historia.mp3" aria-label="Escuchar narración">▶</button>
+      <div class="barras" aria-hidden="true"></div>
+      <div class="estado">Escúchalo — toca para reproducir</div>
+      <div class="nota-voz">Narrado por la inteligencia artificial de Velorian</div>
     </div>
-  </div>
-</section>
+    <div class="tiempo revelar" style="text-align:left">
+      <div class="hito"><div class="anio">El origen</div><h3>Quinto de primaria</h3><p>Santiago y Ricardo fundan Velorian en un cuaderno. Nadie lo tomó en serio — excepto ellos.</p></div>
+      <div class="hito"><div class="anio">2026</div><h3>La construcción</h3><p>Nace la división digital, el primer cliente real, y la flota toma forma: cinco máquinas con nombre propio.</p></div>
+      <div class="hito"><div class="anio">2042</div><h3>El horizonte</h3><p>Año de producción marcado en cada ficha. La fecha no es casualidad: es la promesa con plazo.</p></div>
+    </div>
+  </section>
+</div>
 
-<section id="digital">
-  <div class="cabeza revelar">
-    <div class="chip">División digital</div>
-    <h2>La misma ingeniería, <b>para tu negocio.</b></h2>
-    <p>El equipo que diseña estas máquinas construye presencia digital que no se parece a nada de lo que tiene tu competencia.</p>
-  </div>
-  <div class="servicios-grid revelar">
-    <div class="servicio">
-      <span class="n">01</span>
-      <h3>Páginas web de autor</h3>
-      <p>Te mostramos tu sitio funcionando antes de que pagues un peso.</p>
-      <div class="precio">Desde <span>$8,000 MXN</span></div>
+<!-- ============================================================ CONCEPT CARS -->
+<div class="vista" id="vista-concept">
+  <section class="seccion">
+    <div class="cabeza revelar">
+      <div class="chip">Concept Cars</div>
+      <h2>Cinco máquinas. <b>Un solo lenguaje.</b></h2>
+      <p>Toca cualquier ficha para ver su edición de colección.</p>
     </div>
-    <div class="servicio">
-      <span class="n">02</span>
-      <h3>Experiencias premium 3D</h3>
-      <p>Sitios como este — 3D interactivo, video y dirección de arte.</p>
-      <div class="precio">Desde <span>$15,000 MXN</span></div>
+    <div class="flota-grid">
+      <div class="modelo revelar" data-video><video muted loop playsinline preload="metadata" src="assets/gheopardo.mp4"></video><div class="velo"></div><button class="ficha" data-poster="assets/poster-gheopardo.jpg">Ficha de colección</button><div class="contenido"><div><span class="tag">01 · Hypercar</span><h3>Gheopardo</h3></div><div class="specs"><div class="spec"><b>1,700</b><span>HP</span></div><div class="spec"><b>3,500</b><span>Nm</span></div><div class="spec"><b>&lt;2 s</b><span>0–100</span></div></div></div></div>
+      <div class="modelo revelar" data-video><video muted loop playsinline preload="metadata" src="assets/lafroditha.mp4"></video><div class="velo"></div><button class="ficha" data-poster="assets/poster-lafroditha.jpg">Ficha de colección</button><div class="contenido"><div><span class="tag">02 · Grand Hybrid</span><h3>Lafroditha</h3></div><div class="specs"><div class="spec"><b>V12</b><span>Híbrido</span></div><div class="spec"><b>1,250+</b><span>HP</span></div><div class="spec"><b>1/50</b><span>Collector</span></div></div></div></div>
+      <div class="modelo revelar" data-video><video muted loop playsinline preload="metadata" src="assets/scorpion.mp4"></video><div class="velo"></div><button class="ficha" data-poster="assets/poster-scorpion.jpg">Ficha de colección</button><div class="contenido"><div><span class="tag">03 · Gran turismo</span><h3>Scorpion RS</h3></div><div class="specs"><div class="spec"><b>Twin</b><span>Turbo</span></div><div class="spec"><b>Aero</b><span>Activa</span></div><div class="spec"><b>4-Tip</b><span>Escape</span></div></div></div></div>
+      <div class="modelo revelar" data-video><video muted loop playsinline preload="metadata" src="assets/golondrina.mp4"></video><div class="velo"></div><button class="ficha" data-poster="assets/poster-golondrina.jpg">Ficha de colección</button><div class="contenido"><div><span class="tag">04 · VTOL</span><h3>La Golondrina</h3></div><div class="specs"><div class="spec"><b>1,400</b><span>HP</span></div><div class="spec"><b>480</b><span>km/h</span></div><div class="spec"><b>EDF</b><span>Distribuido</span></div></div></div></div>
+      <div class="modelo revelar" data-video><video muted loop playsinline preload="metadata" src="assets/arelios.mp4"></video><div class="velo"></div><button class="ficha" data-poster="assets/poster-arelios.jpg">Ficha de colección</button><div class="contenido"><div><span class="tag">05 · Multimodal</span><h3>Arelios</h3></div><div class="specs"><div class="spec"><b>100 m</b><span>Prof. máx</span></div><div class="spec"><b>3</b><span>Medios</span></div><div class="spec"><b>4.2°C</b><span>H₂O</span></div></div></div></div>
     </div>
-    <div class="servicio">
-      <span class="n">03</span>
-      <h3>Bots de WhatsApp con IA</h3>
-      <p>Tu negocio responde solo, las 24 horas, con inteligencia real.</p>
-      <div class="precio"><span>$2,000</span> + $500/mes</div>
+    <div class="legal revelar">
+      <b>Patente en trámite ante el IMPI</b>
+      <span>Diseños, nombres y conceptos protegidos · Todos los derechos reservados © Velorian Industries. La reproducción total o parcial sin autorización constituye una violación a la ley de propiedad industrial.</span>
     </div>
-    <div class="servicio">
-      <span class="n">04</span>
-      <h3>Contenido con IA</h3>
-      <p>Video e imagen de última generación para tu marca, todos los días.</p>
-      <div class="precio">Planes <span>a medida</span></div>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<section id="coleccion">
-  <div class="cabeza revelar">
-    <div class="chip">La colección</div>
-    <h2>Ediciones <b>de autor.</b></h2>
-  </div>
-  <div class="postres revelar">
-    <a href="#" data-poster="assets/poster-gheopardo.jpg"><img src="assets/poster-gheopardo.jpg" alt="Póster Gheopardo" loading="lazy"></a>
-    <a href="#" data-poster="assets/poster-lafroditha.jpg"><img src="assets/poster-lafroditha.jpg" alt="Póster Lafroditha" loading="lazy"></a>
-    <a href="#" data-poster="assets/poster-scorpion.jpg"><img src="assets/poster-scorpion.jpg" alt="Póster Scorpion RS" loading="lazy"></a>
-    <a href="#" data-poster="assets/poster-golondrina.jpg"><img src="assets/poster-golondrina.jpg" alt="Póster La Golondrina" loading="lazy"></a>
-    <a href="#" data-poster="assets/poster-arelios.jpg"><img src="assets/poster-arelios.jpg" alt="Póster Arelios" loading="lazy"></a>
-  </div>
-</section>
+<!-- ============================================================ SERVICIOS -->
+<div class="vista" id="vista-servicios">
+  <section class="seccion">
+    <div class="cabeza revelar">
+      <div class="chip">Lo que construimos para terceros</div>
+      <h2>Tu negocio, <b>con ingeniería Velorian.</b></h2>
+      <p>Pasa el cursor por cada servicio.</p>
+    </div>
+    <div class="lista-reveal revelar">
+      <div class="item-reveal" data-tab="precios">
+        <h3>Páginas web</h3>
+        <p class="sub-item">Sitios de autor con animación propia — te enseñamos el tuyo antes de pagar.</p>
+        <span class="precio-tag">Desde $8,000 MXN</span>
+        <div class="pop a"><img src="assets/gheopardo-oro.png" alt=""></div>
+        <div class="pop b"><img src="assets/hypercar-tunel.png" alt=""></div>
+      </div>
+      <div class="item-reveal" data-tab="precios">
+        <h3>Bots de WhatsApp</h3>
+        <p class="sub-item">Tu negocio contesta solo las 24 horas, con inteligencia artificial real — ya operando en clientes reales.</p>
+        <span class="precio-tag">$2,000 + $500/mes</span>
+        <div class="pop a"><img src="assets/poster-arelios.jpg" alt=""></div>
+        <div class="pop b"><img src="assets/poster-scorpion.jpg" alt=""></div>
+      </div>
+      <div class="item-reveal" data-tab="precios">
+        <h3>Meta Ads</h3>
+        <p class="sub-item">Campañas en Facebook e Instagram gestionadas con datos, no con corazonadas.</p>
+        <span class="precio-tag">$4,000 MXN/mes</span>
+        <div class="pop a"><img src="assets/poster-lafroditha.jpg" alt=""></div>
+        <div class="pop b"><img src="assets/poster-golondrina.jpg" alt=""></div>
+      </div>
+      <div class="item-reveal" data-tab="precios">
+        <h3>Experiencias 3D</h3>
+        <p class="sub-item">Sitios inmersivos con video y 3D — como este que estás viendo.</p>
+        <span class="precio-tag">Desde $15,000 MXN</span>
+        <div class="pop a"><img src="assets/poster-gheopardo.jpg" alt=""></div>
+        <div class="pop b"><img src="assets/emblema.png" alt=""></div>
+      </div>
+    </div>
 
+    <div class="escenario">
+      <div class="panel-3d" id="panel3d">
+        <div class="pantalla">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+            <b style="font-size:14px;letter-spacing:0.08em">PANEL VELORIAN — cliente demo</b>
+            <span style="font-size:11px;color:var(--gris)">actualizado en vivo</span>
+          </div>
+          <div class="fila-kpi">
+            <div class="kpi"><b data-contar="1284">0</b><span>Mensajes atendidos por el bot</span><div class="delta">+34% este mes</div></div>
+            <div class="kpi"><b data-contar="97">0</b><span>Clientes nuevos captados</span><div class="delta">+18%</div></div>
+            <div class="kpi"><b data-contar="42">0</b><span>Citas agendadas</span><div class="delta">+22%</div></div>
+          </div>
+          <canvas id="grafica"></canvas>
+          <div class="pie-panel"><span>Así se ve el negocio de nuestros clientes: creciendo mientras duermen.</span><span>Velorian OS</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ PRECIOS -->
+<div class="vista" id="vista-precios">
+  <section class="seccion" style="text-align:center">
+    <div class="chip">Precios claros</div>
+    <h2 class="revelar">Sin letras chicas. <b>Sin sorpresas.</b></h2>
+    <div class="toggle-zona revelar">
+      <span class="act" id="lblUnico">Proyecto único</span>
+      <div class="switch" id="switchPrecio" role="switch" aria-checked="false" tabindex="0"></div>
+      <span id="lblMensual">Con mantenimiento <em style="color:var(--oro);font-style:normal">(recomendado)</em></span>
+    </div>
+    <div class="planes revelar">
+      <div class="plan">
+        <div class="nom">Página web de autor</div>
+        <div class="monto">$<span data-precio data-unico="8000" data-mensual="8000">8,000</span><small> MXN</small></div>
+        <div class="desc-precio" data-alt data-unico="pago único, entrega en días" data-mensual="+ $500/mes con actualizaciones">pago único, entrega en días</div>
+        <ul>
+          <li>Diseño de autor por giro — no plantillas</li>
+          <li>La ves funcionando ANTES de pagar</li>
+          <li>Optimizada para celular y Google</li>
+          <li>Dominio y hosting gestionados</li>
+        </ul>
+        <a class="liquido cta-plan" href="https://wa.me/528444511106?text=Me%20interesa%20una%20p%C3%A1gina%20web" rel="noopener">Lo quiero</a>
+      </div>
+      <div class="plan popular">
+        <div class="badge">★ Más pedido</div>
+        <div class="nom">Web + Bot de WhatsApp</div>
+        <div class="monto">$<span data-precio data-unico="10000" data-mensual="10000">10,000</span><small> MXN</small></div>
+        <div class="desc-precio" data-alt data-unico="pago único, bot incluido 1er mes" data-mensual="+ $500/mes — el bot nunca duerme">pago único, bot incluido 1er mes</div>
+        <ul>
+          <li>Todo lo de la página de autor</li>
+          <li>Bot con IA que atiende 24/7</li>
+          <li>Detecta interés y agenda citas</li>
+          <li>Reportes de clientes captados</li>
+          <li>Soporte directo con nosotros</li>
+        </ul>
+        <a class="metal cta-plan" href="https://wa.me/528444511106?text=Me%20interesa%20el%20paquete%20Web%20%2B%20Bot" rel="noopener"><i></i><b>Empezar hoy</b></a>
+      </div>
+      <div class="plan">
+        <div class="nom">Experiencia Premium 3D</div>
+        <div class="monto">$<span data-precio data-unico="15000" data-mensual="15000">15,000</span><small> MXN</small></div>
+        <div class="desc-precio" data-alt data-unico="desde, según el proyecto" data-mensual="+ $500/mes con evolución continua">desde, según el proyecto</div>
+        <ul>
+          <li>3D interactivo, video y dirección de arte</li>
+          <li>Como este sitio — nivel marca de lujo</li>
+          <li>Narración con voz IA opcional</li>
+          <li>Para marcas que quieren imponerse</li>
+        </ul>
+        <a class="liquido cta-plan" href="https://wa.me/528444511106?text=Me%20interesa%20la%20experiencia%20premium%203D" rel="noopener">Cotizar</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ CTA FINAL + FOOTER -->
 <div class="final">
   <img class="fondo" src="assets/hypercar-tunel.png" alt="" loading="lazy">
   <div class="velo"></div>
   <div class="interior revelar">
     <div class="chip">Contacto</div>
     <h2>Construyamos <b>lo que sigue.</b></h2>
-    <p>Respondemos rápido — cuéntanos qué traes en mente.</p>
-    <div class="cta-row">
-      <a class="pill wa" href="https://wa.me/528444511106" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.79h-.01a9.9 9.9 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 7 2.9 9.83 9.83 0 0 1 2.89 7c0 5.45-4.44 9.88-9.9 9.88m8.42-18.3A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.33.16 11.89c0 2.1.55 4.14 1.59 5.94L.06 24l6.33-1.66a11.9 11.9 0 0 0 5.66 1.44h.01c6.55 0 11.89-5.33 11.89-11.89 0-3.18-1.24-6.16-3.48-8.4"/></svg>
-        WhatsApp directo
-      </a>
-      <a class="pill fantasma" href="mailto:velorian.industries@gmail.com">velorian.industries@gmail.com</a>
+    <p style="color:var(--gris);margin:12px 0 34px">Respondemos rápido — de verdad.</p>
+    <div class="fila-cta">
+      <a class="metal" href="https://wa.me/528444511106" rel="noopener"><i></i><b>WhatsApp directo</b></a>
+      <a class="liquido" href="mailto:velorian.industries@gmail.com">velorian.industries@gmail.com</a>
     </div>
   </div>
 </div>
 
 <footer>
-  <a class="marca" href="#"><img src="assets/wordmark-star.jpg" alt="" style="filter:invert(1)"><span style="font-size:12px;letter-spacing:0.18em;font-weight:700">VELORIAN</span></a>
-  <div>Saltillo, Coahuila, México · <a href="https://wa.me/528444511106">+52 844 451 1106</a> · <a href="mailto:velorian.industries@gmail.com">velorian.industries@gmail.com</a></div>
-  <div>© 2026 · Conceptos de diseño en desarrollo</div>
+  <div style="display:flex;align-items:center;gap:9px"><img src="assets/wordmark-star.jpg" alt=""><b style="font-size:11px;letter-spacing:0.2em">VELORIAN</b></div>
+  <div>Saltillo, Coahuila, México · <a href="https://wa.me/528444511106">+52 844 451 1106</a></div>
+  <div>© 2026 · Patente en trámite ante el IMPI · Todos los derechos reservados</div>
 </footer>
+
+<button id="burbuja-velo" aria-label="Abrir asistente"><img src="assets/emblema.png" alt=""></button>
+<div id="chat-velo" role="dialog" aria-label="Asistente Velorian">
+  <div class="cab"><img src="assets/emblema.png" alt=""><div><b>VELO</b><span>Asistente de Velorian — respuestas al instante</span></div></div>
+  <div id="mensajes"></div>
+  <form id="formVelo"><input id="inputVelo" type="text" placeholder="Pregúntame sobre precios, la flota..." autocomplete="off"><button type="submit">→</button></form>
+</div>
 
 <div id="lightbox" role="dialog" aria-label="Ficha de colección"><img src="" alt="Ficha de colección"></div>
 
-<script src="assets/three.min.js"></script>
 <script>
 (function () {
   var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ============ PESTAÑAS ============ */
+  var vistas = document.querySelectorAll('.vista');
+  var tabs = document.querySelectorAll('.tab');
+  function irA(nombre) {
+    vistas.forEach(function (v) { v.classList.toggle('activa', v.id === 'vista-' + nombre); });
+    tabs.forEach(function (t) { t.classList.toggle('activa', t.dataset.tab === nombre); });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.querySelectorAll('.vista.activa .revelar').forEach(function (el) { observar(el); });
+    gestionarMusica(nombre);
+    if (nombre === 'servicios') { dibujarGrafica(); contarKPIs(); }
+  }
+  document.querySelectorAll('[data-tab]').forEach(function (el) {
+    el.addEventListener('click', function () { irA(el.dataset.tab); });
+  });
+
+  /* ============ REVELADOS ============ */
   var obs = new IntersectionObserver(function (es) {
     es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visto'); obs.unobserve(e.target); } });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.revelar').forEach(function (el) { obs.observe(el); });
+  function observar(el) { obs.observe(el); }
+  document.querySelectorAll('.revelar').forEach(observar);
 
+  /* ============ HERO: el video del logo crece con el scroll ============ */
+  var marco = document.getElementById('marcoVideo');
+  var fondoHero = document.getElementById('fondoHero');
+  var p1 = document.getElementById('palabra1'), p2 = document.getElementById('palabra2');
+  var pista = document.getElementById('pistaScroll');
+  var expansor = document.getElementById('expansor');
+  function esMovil() { return window.innerWidth < 768; }
+  function actualizarHero() {
+    if (!document.getElementById('vista-inicio').classList.contains('activa')) return;
+    var alcance = expansor.offsetHeight - window.innerHeight;
+    var prog = Math.min(Math.max(window.scrollY / (alcance * 0.82), 0), 1);
+    var anchoIni = esMovil() ? 280 : 340, altoIni = esMovil() ? 380 : 420;
+    var anchoFin = window.innerWidth, altoFin = window.innerHeight;
+    marco.style.width = (anchoIni + (anchoFin - anchoIni) * prog) + 'px';
+    marco.style.height = (altoIni + (altoFin - altoIni) * prog) + 'px';
+    marco.style.borderRadius = (22 * (1 - prog)) + 'px';
+    fondoHero.style.opacity = 1 - prog;
+    var despl = prog * (esMovil() ? 46 : 34);
+    p1.style.transform = 'translateX(-' + despl + 'vw)';
+    p2.style.transform = 'translateX(' + despl + 'vw)';
+    pista.style.opacity = 1 - prog * 2;
+  }
+  window.addEventListener('scroll', actualizarHero, { passive: true });
+  window.addEventListener('resize', actualizarHero);
+  actualizarHero();
+
+  /* ============ GOOEY TEXT (morph con blur + umbral) ============ */
+  function gooey(id1, id2, palabras) {
+    var e1 = document.getElementById(id1), e2 = document.getElementById(id2);
+    if (!e1 || !e2) return;
+    if (reducido) { e1.textContent = palabras[0]; e2.textContent = ''; return; }
+    var idx = 0, morphDur = 1.1, quietoDur = 1.6, t0 = null, fase = 'quieto';
+    e1.textContent = palabras[0]; e2.textContent = palabras[1 % palabras.length];
+    function cuadro(ts) {
+      requestAnimationFrame(cuadro);
+      if (!t0) t0 = ts;
+      var dt = (ts - t0) / 1000;
+      if (fase === 'quieto') {
+        if (dt >= quietoDur) { fase = 'morph'; t0 = ts; }
+        e1.style.filter = ''; e1.style.opacity = 1; e2.style.filter = 'blur(24px)'; e2.style.opacity = 0;
+      } else {
+        var f = Math.min(dt / morphDur, 1);
+        e2.style.filter = 'blur(' + Math.min(8 / Math.max(f, 0.01) - 8, 60) + 'px)';
+        e2.style.opacity = Math.pow(f, 0.4);
+        var g = 1 - f;
+        e1.style.filter = 'blur(' + Math.min(8 / Math.max(g, 0.01) - 8, 60) + 'px)';
+        e1.style.opacity = Math.pow(g, 0.4);
+        if (f >= 1) {
+          idx = (idx + 1) % palabras.length;
+          e1.textContent = palabras[idx];
+          e2.textContent = palabras[(idx + 1) % palabras.length];
+          var tmp = e1; // el que entra pasa a ser el visible
+          e1.style.filter = ''; e1.style.opacity = 1;
+          fase = 'quieto'; t0 = ts;
+        }
+      }
+    }
+    requestAnimationFrame(cuadro);
+  }
+  gooey('goo1v', 'goo2v', ['Soñar', 'Diseñar', 'Construir', 'Volar', 'Trascender']);
+  gooey('goo1h', 'goo2h', ['Dos niños', 'Un cuaderno', 'Una promesa', 'Velorian']);
+
+  /* ============ NARRADORES DE VOZ (audio cacheado, replay infinito) ============ */
+  document.querySelectorAll('.narrador').forEach(function (n) {
+    var btn = n.querySelector('.boton-voz');
+    var barras = n.querySelector('.barras');
+    var estado = n.querySelector('.estado');
+    for (var i = 0; i < 42; i++) barras.appendChild(document.createElement('i'));
+    var audio = new Audio(btn.dataset.audio);
+    var animando = null;
+    function animarBarras() {
+      barras.querySelectorAll('i').forEach(function (b) { b.style.height = (3 + Math.random() * 26) + 'px'; });
+      animando = setTimeout(animarBarras, 110);
+    }
+    function parar() {
+      clearTimeout(animando);
+      barras.querySelectorAll('i').forEach(function (b) { b.style.height = '4px'; });
+      btn.classList.remove('sonando'); btn.textContent = '▶';
+      estado.textContent = 'Escúchalo — toca para reproducir';
+    }
+    audio.addEventListener('ended', parar);
+    btn.addEventListener('click', function () {
+      if (!audio.paused) { audio.pause(); audio.currentTime = 0; parar(); return; }
+      document.querySelectorAll('audio').forEach(function (a) { a.pause(); });
+      audio.play();
+      btn.classList.add('sonando'); btn.textContent = '■';
+      estado.textContent = 'Reproduciendo...';
+      animarBarras();
+    });
+  });
+
+  /* ============ MÚSICA POR SECCIÓN ============ */
+  var sonidoOn = false;
+  var btnSonido = document.getElementById('btnSonido');
+  var musicaJarvis = new Audio('assets/musica-jarvis.mp3');
+  musicaJarvis.loop = true; musicaJarvis.volume = 0.35;
+  var ctxAudio = null, ganancia = null, oscA = null, oscB = null;
+  function ambienteServicios(encender) {
+    if (encender) {
+      if (!ctxAudio) {
+        ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
+        ganancia = ctxAudio.createGain(); ganancia.gain.value = 0; ganancia.connect(ctxAudio.destination);
+        oscA = ctxAudio.createOscillator(); oscA.type = 'sine'; oscA.frequency.value = 110;
+        oscB = ctxAudio.createOscillator(); oscB.type = 'sine'; oscB.frequency.value = 164.8;
+        var g2 = ctxAudio.createGain(); g2.gain.value = 0.4;
+        oscA.connect(ganancia); oscB.connect(g2); g2.connect(ganancia);
+        oscA.start(); oscB.start();
+      }
+      ctxAudio.resume();
+      ganancia.gain.linearRampToValueAtTime(0.045, ctxAudio.currentTime + 1.4);
+    } else if (ganancia) {
+      ganancia.gain.linearRampToValueAtTime(0, ctxAudio.currentTime + 0.8);
+    }
+  }
+  function gestionarMusica(vista) {
+    if (!sonidoOn) return;
+    if (vista === 'precios') { ambienteServicios(false); musicaJarvis.currentTime = 0; musicaJarvis.play().catch(function(){}); }
+    else if (vista === 'servicios') { musicaJarvis.pause(); ambienteServicios(true); }
+    else { musicaJarvis.pause(); ambienteServicios(false); }
+  }
+  btnSonido.addEventListener('click', function () {
+    sonidoOn = !sonidoOn;
+    btnSonido.classList.toggle('on', sonidoOn);
+    var activa = document.querySelector('.tab.activa').dataset.tab;
+    if (sonidoOn) gestionarMusica(activa);
+    else { musicaJarvis.pause(); ambienteServicios(false); }
+  });
+
+  /* ============ GRÁFICA (canvas) + KPIs ============ */
+  var graficaDibujada = false;
+  function dibujarGrafica() {
+    var c = document.getElementById('grafica');
+    if (!c || graficaDibujada) return;
+    graficaDibujada = true;
+    var dpr = Math.min(window.devicePixelRatio, 2);
+    c.width = c.clientWidth * dpr; c.height = c.clientHeight * dpr;
+    var ctx = c.getContext('2d'); ctx.scale(dpr, dpr);
+    var W = c.clientWidth, H = c.clientHeight;
+    var datos = [12, 18, 15, 26, 31, 28, 44, 52, 49, 68, 74, 92];
+    var max = 100;
+    ctx.strokeStyle = 'rgba(245,244,240,0.08)';
+    for (var g = 1; g <= 4; g++) { ctx.beginPath(); ctx.moveTo(0, H * g / 5); ctx.lineTo(W, H * g / 5); ctx.stroke(); }
+    var prog = 0;
+    function trazar() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.strokeStyle = 'rgba(245,244,240,0.08)';
+      for (var g = 1; g <= 4; g++) { ctx.beginPath(); ctx.moveTo(0, H * g / 5); ctx.lineTo(W, H * g / 5); ctx.stroke(); }
+      var hasta = Math.floor(prog * (datos.length - 1)) + 1;
+      var grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, 'rgba(212,179,106,0.35)'); grad.addColorStop(1, 'rgba(212,179,106,0)');
+      ctx.beginPath();
+      datos.slice(0, hasta + 1).forEach(function (v, i) {
+        var x = W * i / (datos.length - 1), y = H - (v / max) * H * 0.92 - 6;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = '#d4b36a'; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.stroke();
+      ctx.lineTo(W * Math.min(hasta, datos.length - 1) / (datos.length - 1), H); ctx.lineTo(0, H); ctx.closePath();
+      ctx.fillStyle = grad; ctx.fill();
+      var ux = W * Math.min(hasta, datos.length - 1) / (datos.length - 1);
+      var uy = H - (datos[Math.min(hasta, datos.length - 1)] / max) * H * 0.92 - 6;
+      ctx.beginPath(); ctx.arc(ux, uy, 4.5, 0, 7); ctx.fillStyle = '#d4b36a'; ctx.fill();
+      if (prog < 1 && !reducido) { prog += 0.02; requestAnimationFrame(trazar); }
+    }
+    reducido ? (prog = 1, trazar()) : trazar();
+  }
+  function contarKPIs() {
+    document.querySelectorAll('[data-contar]').forEach(function (el) {
+      if (el.dataset.hecho) return; el.dataset.hecho = '1';
+      var meta = parseInt(el.dataset.contar, 10), ini = null;
+      if (reducido) { el.textContent = meta.toLocaleString(); return; }
+      function paso(ts) {
+        if (!ini) ini = ts;
+        var p = Math.min((ts - ini) / 1300, 1);
+        el.textContent = Math.round(meta * (1 - Math.pow(1 - p, 3))).toLocaleString();
+        if (p < 1) requestAnimationFrame(paso);
+      }
+      requestAnimationFrame(paso);
+    });
+  }
+  /* panel inclinado se endereza con el scroll */
+  window.addEventListener('scroll', function () {
+    var panel = document.getElementById('panel3d');
+    if (!panel || !document.getElementById('vista-servicios').classList.contains('activa')) return;
+    var r = panel.getBoundingClientRect();
+    var p = Math.min(Math.max(1 - (r.top - 80) / (window.innerHeight * 0.7), 0), 1);
+    panel.style.transform = 'rotateX(' + (22 * (1 - p)) + 'deg) scale(' + (0.94 + 0.06 * p) + ')';
+  }, { passive: true });
+
+  /* ============ PRECIOS: toggle ============ */
+  var sw = document.getElementById('switchPrecio');
+  var mensual = false;
+  function animarNumero(el, hasta) {
+    var desde = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10) || 0, ini = null;
+    function paso(ts) {
+      if (!ini) ini = ts;
+      var p = Math.min((ts - ini) / 450, 1);
+      el.textContent = Math.round(desde + (hasta - desde) * p).toLocaleString();
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  function aplicarPrecio() {
+    document.querySelectorAll('[data-precio]').forEach(function (el) {
+      animarNumero(el, parseInt(mensual ? el.dataset.mensual : el.dataset.unico, 10));
+    });
+    document.querySelectorAll('[data-alt]').forEach(function (el) {
+      el.textContent = mensual ? el.dataset.mensual : el.dataset.unico;
+    });
+    document.getElementById('lblUnico').classList.toggle('act', !mensual);
+    document.getElementById('lblMensual').classList.toggle('act', mensual);
+    sw.classList.toggle('on', mensual);
+    sw.setAttribute('aria-checked', mensual);
+  }
+  sw.addEventListener('click', function () { mensual = !mensual; aplicarPrecio(); });
+  sw.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mensual = !mensual; aplicarPrecio(); } });
+
+  /* ============ VIDEOS DE FLOTA solo en pantalla ============ */
   var obsVid = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
-      var v = e.target.querySelector('video');
-      if (!v) return;
-      if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); }
+      var v = e.target.querySelector('video'); if (!v) return;
+      e.isIntersecting ? v.play().catch(function(){}) : v.pause();
     });
   }, { threshold: 0.3 });
   document.querySelectorAll('[data-video]').forEach(function (el) { obsVid.observe(el); });
 
-  var lb = document.getElementById('lightbox');
-  var lbImg = lb.querySelector('img');
+  /* ============ LIGHTBOX ============ */
+  var lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
   document.querySelectorAll('[data-poster]').forEach(function (el) {
-    el.addEventListener('click', function (ev) {
-      ev.preventDefault();
-      lbImg.src = el.dataset.poster;
-      lb.classList.add('abierto');
-    });
+    el.addEventListener('click', function (ev) { ev.preventDefault(); lbImg.src = el.dataset.poster; lb.classList.add('abierto'); });
   });
   lb.addEventListener('click', function () { lb.classList.remove('abierto'); });
   window.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.classList.remove('abierto'); });
 
-  // ==========================================================================
-  // TARJETA 3D EN CAPAS (como la referencia: stack explotado flotando)
-  // 4 placas metálicas redondeadas apiladas en isométrico; la de arriba lleva
-  // el emblema Velorian como textura. Flotan, respiran (se separan y juntan)
-  // y hacen parallax con el mouse.
-  // ==========================================================================
-  if (typeof THREE === 'undefined') return;
-  var cont = document.getElementById('escena3d');
-  if (!cont) return;
-
-  var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(cont.clientWidth, cont.clientHeight);
-  cont.appendChild(renderer.domElement);
-
-  var escena = new THREE.Scene();
-  var camara = new THREE.PerspectiveCamera(35, cont.clientWidth / cont.clientHeight, 0.1, 60);
-  camara.position.set(0, 0, 11);
-
-  function placaRedonda(ancho, alto, radio, grosor) {
-    var s = new THREE.Shape();
-    var w = ancho / 2, h = alto / 2, r = radio;
-    s.moveTo(-w + r, -h);
-    s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r);
-    s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h);
-    s.lineTo(-w + r, h); s.quadraticCurveTo(-w, h, -w, h - r);
-    s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h);
-    return new THREE.ExtrudeGeometry(s, { depth: grosor, bevelEnabled: true, bevelThickness: 0.045, bevelSize: 0.045, bevelSegments: 3 });
+  /* ============ ASISTENTE VELO (respuestas al instante, sin exponer llaves) ============ */
+  var burbuja = document.getElementById('burbuja-velo');
+  var chat = document.getElementById('chat-velo');
+  var mensajes = document.getElementById('mensajes');
+  var form = document.getElementById('formVelo');
+  var input = document.getElementById('inputVelo');
+  function agregar(texto, quien) {
+    var d = document.createElement('div');
+    d.className = 'msg ' + quien;
+    d.textContent = texto;
+    mensajes.appendChild(d);
+    mensajes.scrollTop = mensajes.scrollHeight;
   }
-
-  var grupo = new THREE.Group();
-  escena.add(grupo);
-
-  var tonos = [0x121216, 0x1b1b21, 0x26262d, 0x111114];
-  var capas = [];
-  for (var i = 0; i < 4; i++) {
-    var geo = placaRedonda(4.6 - i * 0.28, 3.1 - i * 0.2, 0.42, 0.12);
-    var mat = new THREE.MeshStandardMaterial({ color: tonos[i], metalness: 0.85, roughness: 0.32 });
-    var m = new THREE.Mesh(geo, mat);
-    m.userData.nivel = i;
-    grupo.add(m);
-    capas.push(m);
+  function escribirVelo(texto) {
+    var d = document.createElement('div');
+    d.className = 'msg velo'; d.textContent = '';
+    mensajes.appendChild(d);
+    var i = 0;
+    (function tic() {
+      d.textContent = texto.slice(0, ++i);
+      mensajes.scrollTop = mensajes.scrollHeight;
+      if (i < texto.length) setTimeout(tic, reducido ? 0 : 14);
+    })();
   }
-
-  // Emblema Velorian sobre la placa superior
-  new THREE.TextureLoader().load('assets/emblema.png', function (tex) {
-    tex.colorSpace = THREE.SRGBColorSpace;
-    var plano = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.7, 2.2),
-      new THREE.MeshStandardMaterial({ map: tex, transparent: false, metalness: 0.4, roughness: 0.5 })
-    );
-    plano.userData.nivel = 3.01;
-    grupo.add(plano);
-    capas.push(plano);
+  var RESPUESTAS = [
+    { claves: ['precio', 'costo', 'cuanto', 'cuánto', 'vale'], r: 'Las páginas web de autor van desde $8,000 MXN, el paquete Web + Bot de WhatsApp (el más pedido) desde $10,000, y las experiencias premium 3D desde $15,000. Puedes ver el detalle en la pestaña Precios — y lo mejor: tu página la ves funcionando ANTES de pagar.' },
+    { claves: ['bot', 'whatsapp', 'whats'], r: 'Nuestros bots de WhatsApp atienden tu negocio 24/7 con inteligencia artificial real: responden precios, horarios y agendan citas. Cuestan $2,000 de instalación + $500 al mes, y ya operan en negocios reales de Saltillo.' },
+    { claves: ['web', 'pagina', 'página', 'sitio'], r: 'Hacemos páginas con diseño de autor según el giro de tu negocio — nada de plantillas. Te mostramos la tuya funcionando antes de que pagues un peso. Desde $8,000 MXN, entregada en días.' },
+    { claves: ['ads', 'anuncio', 'facebook', 'instagram', 'meta'], r: 'Gestionamos campañas de Meta Ads (Facebook e Instagram) por $4,000 MXN al mes — con datos y reportes, no corazonadas.' },
+    { claves: ['flota', 'auto', 'carro', 'coche', 'gheopardo', 'golondrina', 'arelios', 'lafroditha', 'scorpion', 'vtol'], r: 'La flota Velorian son cinco máquinas de autor: Gheopardo (1,700 HP), Lafroditha (V12 híbrido), Scorpion RS (gran turismo), La Golondrina (VTOL de 480 km/h) y Arelios (multimodal, baja a 100 m). Míralas en la pestaña Concept Cars — con patente en trámite ante el IMPI.' },
+    { claves: ['tiempo', 'tarda', 'cuando', 'cuándo', 'entrega'], r: 'Una página web de autor se entrega en cuestión de días — normalmente la primera versión la ves en 24-48 horas. El bot de WhatsApp queda operando el mismo día que nos das la información de tu negocio.' },
+    { claves: ['quien', 'quién', 'velorian', 'ustedes', 'empresa', 'historia'], r: 'Velorian Industries nació en Saltillo, fundada por Santiago Cernuda y Ricardo Treviño. Diseñamos hipervehículos de autor y construimos tecnología digital para negocios. Escucha nuestra historia narrada en la pestaña Historia.' },
+    { claves: ['contacto', 'hablar', 'llamar', 'telefono', 'teléfono', 'correo'], r: 'Escríbenos directo por WhatsApp al +52 844 451 1106 o al correo velorian.industries@gmail.com — respondemos rápido, de verdad.' },
+  ];
+  function responder(texto) {
+    var t = texto.toLowerCase();
+    for (var i = 0; i < RESPUESTAS.length; i++) {
+      if (RESPUESTAS[i].claves.some(function (c) { return t.indexOf(c) !== -1; })) return RESPUESTAS[i].r;
+    }
+    return 'Buena pregunta. Para darte una respuesta exacta, escríbenos por WhatsApp al +52 844 451 1106 — un humano de Velorian te contesta en minutos. También puedes explorar las pestañas de arriba.';
+  }
+  burbuja.addEventListener('click', function () {
+    chat.classList.toggle('abierto');
+    if (chat.classList.contains('abierto') && !mensajes.children.length) {
+      escribirVelo('Bienvenido a Velorian. Soy VELO — pregúntame sobre precios, la flota, los bots de WhatsApp o lo que necesites.');
+    }
   });
-
-  var luzPrincipal = new THREE.DirectionalLight(0xffffff, 2.6); luzPrincipal.position.set(4, 6, 6); escena.add(luzPrincipal);
-  var luzOro = new THREE.DirectionalLight(0xd4b36a, 0.9); luzOro.position.set(-5, -3, 4); escena.add(luzOro);
-  escena.add(new THREE.AmbientLight(0xffffff, 0.4));
-
-  // pose isométrica como la referencia
-  grupo.rotation.set(-0.52, 0.0, -0.35);
-
-  var mouse = { x: 0, y: 0 }, objetivo = { x: 0, y: 0 };
-  window.addEventListener('pointermove', function (e) {
-    objetivo.x = (e.clientX / window.innerWidth - 0.5) * 2;
-    objetivo.y = (e.clientY / window.innerHeight - 0.5) * 2;
-  }, { passive: true });
-
-  window.addEventListener('resize', function () {
-    camara.aspect = cont.clientWidth / cont.clientHeight;
-    camara.updateProjectionMatrix();
-    renderer.setSize(cont.clientWidth, cont.clientHeight);
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var t = input.value.trim(); if (!t) return;
+    agregar(t, 'yo'); input.value = '';
+    setTimeout(function () { escribirVelo(responder(t)); }, 350);
   });
-
-  var t = 0;
-  function cuadro() {
-    requestAnimationFrame(cuadro);
-    t += reducido ? 0 : 0.011;
-    mouse.x += (objetivo.x - mouse.x) * 0.05;
-    mouse.y += (objetivo.y - mouse.y) * 0.05;
-
-    // respiración: las capas se separan y se vuelven a juntar
-    var separacion = 0.34 + Math.sin(t * 0.8) * 0.22;
-    capas.forEach(function (c) {
-      var n = c.userData.nivel;
-      c.position.z = n * separacion + (n > 3 ? 0.09 : 0);
-    });
-
-    grupo.rotation.x = -0.52 + mouse.y * 0.16;
-    grupo.rotation.y = mouse.x * 0.3;
-    grupo.position.y = Math.sin(t * 0.6) * 0.16;
-
-    renderer.render(escena, camara);
-  }
-  cuadro();
 })();
 </script>
 
