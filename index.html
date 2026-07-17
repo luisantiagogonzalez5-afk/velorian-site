@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-vista="inicio">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,15 +22,10 @@
 
   /* ================= NAV / PESTAÑAS ================= */
   nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 26px;background:linear-gradient(180deg,rgba(8,9,11,0.92),rgba(8,9,11,0.55) 70%,transparent);backdrop-filter:blur(10px)}
-  /* .marca conserva una caja chica y fija (34px) para que el nav nunca
-     cambie de alto — el logo real crece POR ENCIMA sin empujar nada,
-     como una marca que se agranda en Inicio y se recoge en las demás
-     pestañas para no tapar la navegación. */
-  .marca{position:relative;width:150px;height:34px;flex-shrink:0;cursor:pointer}
+  .marca{display:flex;align-items:center;gap:10px;cursor:pointer}
   /* wordmark completo en blanco puro: invert vuelve blancas las letras negras
      y mix-blend-screen hace desaparecer el fondo (negro tras invertir) */
-  .marca .wordmark{position:absolute;left:0;top:0;height:34px;width:auto;max-width:70vw;filter:invert(1);mix-blend-mode:screen;transition:height .6s cubic-bezier(.22,.9,.32,1);pointer-events:none}
-  html[data-vista="inicio"] .marca .wordmark{height:130px}
+  .marca .wordmark{height:34px;filter:invert(1);mix-blend-mode:screen}
   .tabs{display:flex;gap:4px;background:rgba(245,244,240,0.05);border:1px solid var(--linea);border-radius:100px;padding:4px;overflow-x:auto;max-width:62vw}
   .tab{border:none;background:transparent;color:var(--gris);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:9px 16px;border-radius:100px;cursor:pointer;white-space:nowrap;transition:all .3s}
   .tab:hover{color:var(--blanco)}
@@ -458,7 +453,6 @@
   var vistas = document.querySelectorAll('.vista');
   var tabs = document.querySelectorAll('.tab');
   function irA(nombre) {
-    document.documentElement.setAttribute('data-vista', nombre);
     vistas.forEach(function (v) { v.classList.toggle('activa', v.id === 'vista-' + nombre); });
     tabs.forEach(function (t) { t.classList.toggle('activa', t.dataset.tab === nombre); });
     window.scrollTo({ top: 0, behavior: 'instant' });
