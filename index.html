@@ -23,9 +23,8 @@
   /* ================= NAV / PESTAÑAS ================= */
   nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 26px;background:linear-gradient(180deg,rgba(8,9,11,0.92),rgba(8,9,11,0.55) 70%,transparent);backdrop-filter:blur(10px)}
   .marca{display:flex;align-items:center;gap:10px;cursor:pointer}
-  /* wordmark completo en blanco puro: invert vuelve blancas las letras negras
-     y mix-blend-screen hace desaparecer el fondo (negro tras invertir) */
-  .marca .wordmark{height:34px;filter:invert(1);mix-blend-mode:screen}
+  .marca img{height:22px;filter:invert(1)}
+  .marca span{font-size:12.5px;font-weight:750;letter-spacing:0.22em;text-transform:uppercase}
   .tabs{display:flex;gap:4px;background:rgba(245,244,240,0.05);border:1px solid var(--linea);border-radius:100px;padding:4px;overflow-x:auto;max-width:62vw}
   .tab{border:none;background:transparent;color:var(--gris);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:9px 16px;border-radius:100px;cursor:pointer;white-space:nowrap;transition:all .3s}
   .tab:hover{color:var(--blanco)}
@@ -203,7 +202,7 @@
 </svg>
 
 <nav>
-  <div class="marca" data-tab="inicio"><img class="wordmark" src="assets/wordmark-completo.png" alt="Velorian Industries"></div>
+  <div class="marca" data-tab="inicio"><img src="assets/wordmark-star.jpg" alt=""><span>Velorian</span></div>
   <div class="tabs" role="tablist">
     <button class="tab activa" data-tab="inicio">Inicio</button>
     <button class="tab" data-tab="vision">Visión</button>
