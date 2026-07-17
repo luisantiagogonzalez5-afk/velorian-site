@@ -4,206 +4,219 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Velorian Industries</title>
-<meta name="description" content="Velorian Industries — hipervehículos de diseño de autor y tecnología digital. Saltillo, Coahuila, México.">
+<meta name="description" content="Velorian Industries — hipervehículos de diseño de autor y tecnología digital para negocios. Saltillo, México.">
 <meta property="og:title" content="Velorian Industries">
 <meta property="og:description" content="Gheopardo · Lafroditha · Scorpion RS · La Golondrina · Arelios">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/emblema.png" type="image/png">
 <style>
   :root {
-    --negro: #08090b;
-    --marfil: #f4f1e9;
-    --marfil-dim: #9d9a90;
-    --cromo: #c9c7c0;
-    --oro: #b99a5b;
-    --linea-osc: rgba(244,241,233,0.14);
-    --linea-clara: rgba(8,9,11,0.14);
+    --fondo: #0a0a0c;
+    --panel: #060607;
+    --blanco: #f5f5f4;
+    --gris: #8b8b93;
+    --linea: rgba(245,245,244,0.1);
+    --oro: #d4b36a;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--negro);
-    color: var(--marfil);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+    background: var(--fondo);
+    color: var(--blanco);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
   }
-  .serif { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
 
-  /* ============ NAV ============ */
+  /* ============ NAV (estilo referencia: logo · links · CTA píldora) ============ */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 50;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 34px;
-    mix-blend-mode: difference;
+    padding: 16px 30px;
+    background: linear-gradient(180deg, rgba(10,10,12,0.9), rgba(10,10,12,0));
+    backdrop-filter: blur(6px);
   }
-  .marca { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; }
-  .marca img { height: 30px; width: auto; filter: invert(1); }
-  .marca span { font-size: 13px; font-weight: 700; letter-spacing: 0.34em; text-transform: uppercase; }
-  nav .links { display: flex; gap: 30px; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; }
-  nav .links a { color: #fff; opacity: 0.65; text-decoration: none; transition: opacity 0.25s; }
-  nav .links a:hover, nav .links a:focus-visible { opacity: 1; }
-  @media (max-width: 700px) { nav .links { display: none; } nav { padding: 18px 22px; } }
+  .marca { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--blanco); }
+  .marca img { height: 24px; filter: invert(1); }
+  .marca span { font-size: 13.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+  nav .links { display: flex; gap: 28px; font-size: 13px; }
+  nav .links a { color: var(--gris); text-decoration: none; transition: color 0.2s; }
+  nav .links a:hover, nav .links a:focus-visible { color: var(--blanco); }
+  .pill {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 11px 24px;
+    border-radius: 100px;
+    background: var(--blanco); color: var(--fondo);
+    font-size: 13.5px; font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.2s;
+  }
+  .pill:hover { background: #fff; }
+  .pill:active { transform: scale(0.96); }
+  .pill svg { width: 17px; height: 17px; fill: currentColor; }
+  .pill.fantasma { background: transparent; color: var(--blanco); border: 1px solid var(--linea); }
+  @media (max-width: 760px) { nav .links { display: none; } }
 
-  /* ============ HERO ============ */
-  .hero { position: relative; height: 100svh; overflow: hidden; }
-  .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,9,11,0.2), transparent 45%, rgba(8,9,11,0.96) 96%); }
-  .hero-abajo {
-    position: absolute; left: 0; right: 0; bottom: 8vh; z-index: 3;
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    padding: 0 24px;
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; color: var(--gris);
+    border: 1px solid var(--linea);
+    border-radius: 100px;
+    padding: 6px 15px;
+    margin-bottom: 22px;
   }
-  .hero-abajo .emblema3d { width: min(200px, 40vw); height: min(200px, 40vw); margin-bottom: -6px; }
-  .hero-abajo h1 {
-    font-family: "Iowan Old Style", Palatino, Georgia, serif;
-    font-size: clamp(30px, 6vw, 62px);
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    text-indent: 0.22em;
-    opacity: 0; animation: velar 1.6s ease 1.4s forwards;
-  }
-  .hero-abajo .lema {
-    margin-top: 12px;
-    font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--marfil-dim);
-    opacity: 0; animation: velar 1.6s ease 1.9s forwards;
-  }
-  @keyframes velar { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; } }
-  .hero-abajo .lema { animation-name: velarSimple; }
-  @keyframes velarSimple { to { opacity: 1; } }
+  .chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--oro); }
 
-  /* ============ INTRO ============ */
-  .intro { padding: 130px 24px; text-align: center; }
-  .intro p {
-    font-family: "Iowan Old Style", Palatino, Georgia, serif;
-    font-size: clamp(22px, 4vw, 34px);
-    font-weight: 400;
-    line-height: 1.45;
-    max-width: 30ch;
+  h1, h2 { font-weight: 300; letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; }
+  h1 b, h2 b { font-weight: 750; }
+
+  /* ============ HERO: texto + tarjeta 3D en capas ============ */
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    align-items: center;
+    gap: 20px;
+    max-width: 1240px;
     margin: 0 auto;
-    text-wrap: balance;
+    padding: 110px 30px 40px;
   }
-  .intro p em { font-style: italic; color: var(--oro); }
-  .intro .firma { margin-top: 30px; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--marfil-dim); }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding-top: 130px; text-align: center; } .hero .chip { margin-inline: auto; } .hero .cta-row { justify-content: center; } }
+  .hero h1 { font-size: clamp(38px, 5.6vw, 68px); }
+  .hero p.baja { color: var(--gris); margin: 22px 0 30px; max-width: 46ch; font-size: 16px; }
+  @media (max-width: 900px) { .hero p.baja { margin-inline: auto; } }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  #escena3d { width: 100%; aspect-ratio: 1/0.95; max-height: 74vh; }
 
-  .revelar { opacity: 0; transform: translateY(40px); transition: opacity 1s ease, transform 1s ease; }
+  /* ============ CINTA MÉTRICAS ============ */
+  .metricas {
+    border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea);
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    max-width: 1240px; margin: 0 auto;
+  }
+  .metrica { padding: 26px 20px; text-align: center; border-right: 1px solid var(--linea); }
+  .metrica:last-child { border-right: none; }
+  .metrica b { display: block; font-size: clamp(22px, 3vw, 30px); font-weight: 750; font-variant-numeric: tabular-nums; }
+  .metrica span { font-size: 12px; color: var(--gris); }
+
+  /* ============ SECCIONES BASE ============ */
+  section { max-width: 1240px; margin: 0 auto; padding: 110px 30px 30px; }
+  .cabeza { max-width: 720px; margin-bottom: 60px; }
+  .cabeza h2 { font-size: clamp(30px, 4.6vw, 52px); }
+  .cabeza p { color: var(--gris); margin-top: 16px; font-size: 15.5px; max-width: 56ch; }
+
+  .revelar { opacity: 0; transform: translateY(36px); transition: opacity 0.85s ease, transform 0.85s ease; }
   .revelar.visto { opacity: 1; transform: none; }
 
-  /* ============ FLOTA — paneles fullscreen estilo Bugatti ============ */
-  .modelo { position: relative; height: 100svh; overflow: hidden; display: flex; align-items: flex-end; }
-  .modelo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease; }
-  .modelo:hover video { transform: scale(1.06); }
-  .modelo .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,9,11,0.35), transparent 40%, rgba(8,9,11,0.88) 100%); }
+  /* ============ FLOTA ============ */
+  .flota-grid { display: grid; gap: 18px; }
+  .modelo {
+    position: relative; border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--linea);
+    aspect-ratio: 16/8;
+    background: var(--panel);
+  }
+  @media (max-width: 720px) { .modelo { aspect-ratio: 4/4.6; } }
+  .modelo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease; }
+  .modelo:hover video { transform: scale(1.07); }
+  .modelo .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,7,0.28), transparent 40%, rgba(6,6,7,0.92)); }
   .modelo .contenido {
-    position: relative; z-index: 3;
-    width: 100%; max-width: 1200px; margin: 0 auto;
-    padding: 0 34px 8vh;
-    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    position: absolute; left: 26px; right: 26px; bottom: 22px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
   }
-  .modelo .idx { font-size: 11px; letter-spacing: 0.34em; color: var(--oro); text-transform: uppercase; display: block; margin-bottom: 12px; }
-  .modelo h2 {
-    font-family: "Iowan Old Style", Palatino, Georgia, serif;
-    font-size: clamp(44px, 9vw, 110px);
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    line-height: 0.95;
+  .modelo .tag { font-size: 11.5px; color: var(--gris); letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  .modelo h3 { font-size: clamp(26px, 4.4vw, 44px); font-weight: 750; letter-spacing: -0.02em; line-height: 1; }
+  .modelo .specs { display: flex; gap: 22px; text-align: right; flex-shrink: 0; }
+  .modelo .spec b { display: block; font-size: clamp(16px, 2.2vw, 22px); font-weight: 750; font-variant-numeric: tabular-nums; }
+  .modelo .spec span { font-size: 10.5px; color: var(--gris); letter-spacing: 0.1em; text-transform: uppercase; }
+  .modelo .ficha {
+    position: absolute; top: 18px; right: 18px;
+    font-size: 12px; color: var(--blanco);
+    background: rgba(10,10,12,0.5); backdrop-filter: blur(6px);
+    border: 1px solid var(--linea); border-radius: 100px;
+    padding: 8px 16px; cursor: pointer;
+    transition: background 0.2s;
   }
-  .modelo .clase { margin-top: 10px; font-size: 12.5px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--marfil-dim); }
-  .modelo .specs { display: flex; gap: 34px; text-align: right; }
-  .modelo .spec b { display: block; font-size: clamp(19px, 2.6vw, 27px); font-weight: 700; font-variant-numeric: tabular-nums; }
-  .modelo .spec span { font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--marfil-dim); }
-  .modelo .ficha-btn {
-    margin-top: 22px;
-    display: inline-block;
-    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--marfil); text-decoration: none;
-    border-bottom: 1px solid var(--oro);
-    padding-bottom: 5px;
-    cursor: pointer; background: none; border-top: none; border-left: none; border-right: none;
-    transition: color 0.25s;
-  }
-  .modelo .ficha-btn:hover { color: var(--oro); }
+  .modelo .ficha:hover { background: rgba(10,10,12,0.8); }
 
-  /* ============ EMBLEMA 3D DIVISOR ============ */
-  .divisor { padding: 120px 24px; text-align: center; background: var(--marfil); color: var(--negro); }
-  .divisor .lienzo-wrap { width: min(320px, 70vw); height: min(320px, 70vw); margin: 0 auto; cursor: grab; }
-  .divisor .lienzo-wrap:active { cursor: grabbing; }
-  .divisor h3 { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: clamp(22px, 4vw, 32px); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 10px; }
-  .divisor p { color: #6d6a62; font-size: 13px; letter-spacing: 0.12em; margin-top: 8px; text-transform: uppercase; }
-
-  /* ============ GALERÍA DE PÓSTERS ============ */
-  .coleccion { padding: 120px 24px; max-width: 1200px; margin: 0 auto; }
-  .coleccion .cabeza { text-align: center; margin-bottom: 60px; }
-  .coleccion .cabeza .idx { font-size: 11px; letter-spacing: 0.34em; color: var(--oro); text-transform: uppercase; }
-  .coleccion h2 { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: clamp(30px, 5.5vw, 54px); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 12px; }
-  .postres { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
-  .postres a { display: block; overflow: hidden; border: 1px solid var(--linea-osc); }
-  .postres img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; aspect-ratio: 4/5; }
-  .postres a:hover img { transform: scale(1.05); }
+  /* ============ FUNDADORES (referencia: Meet the Founders) ============ */
+  .fundadores-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .fundador {
+    border: 1px solid var(--linea); border-radius: 20px;
+    padding: 40px 30px;
+    background: linear-gradient(170deg, rgba(245,245,244,0.035), transparent 55%);
+  }
+  .fundador .retrato {
+    width: 74px; height: 74px; border-radius: 50%;
+    background: linear-gradient(140deg, #1c1c20, #101013);
+    border: 1px solid var(--linea);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 750; color: var(--gris);
+    margin-bottom: 22px;
+  }
+  .fundador h3 { font-size: 21px; font-weight: 750; }
+  .fundador .rol { color: var(--oro); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; margin: 6px 0 14px; }
+  .fundador p { color: var(--gris); font-size: 14px; }
 
   /* ============ DIVISIÓN DIGITAL ============ */
-  .digital { background: var(--marfil); color: var(--negro); padding: 120px 24px; }
-  .digital .interior { max-width: 1100px; margin: 0 auto; }
-  .digital .idx { font-size: 11px; letter-spacing: 0.34em; color: #8a6c33; text-transform: uppercase; }
-  .digital h2 { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: clamp(30px, 5.5vw, 54px); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin: 12px 0 18px; }
-  .digital .sub { color: #6d6a62; max-width: 60ch; margin-bottom: 56px; font-size: 16px; line-height: 1.6; }
-  .filas { border-top: 1px solid var(--linea-clara); }
-  .fila {
-    display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: baseline;
-    padding: 30px 6px;
-    border-bottom: 1px solid var(--linea-clara);
-    transition: padding 0.3s ease;
+  .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .servicio {
+    border: 1px solid var(--linea); border-radius: 20px;
+    padding: 32px 28px;
+    background: var(--panel);
+    transition: border-color 0.3s, transform 0.3s;
   }
-  .fila:hover { padding-left: 16px; }
-  .fila h3 { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: clamp(20px, 3.4vw, 30px); font-weight: 600; }
-  .fila p { color: #6d6a62; font-size: 14px; margin-top: 6px; max-width: 56ch; }
-  .fila .precio { font-size: 14px; font-weight: 700; letter-spacing: 0.06em; white-space: nowrap; }
-  .fila .precio span { color: #8a6c33; }
+  .servicio:hover { border-color: rgba(212,179,106,0.45); transform: translateY(-4px); }
+  .servicio .n { font-size: 12px; color: var(--gris); font-variant-numeric: tabular-nums; }
+  .servicio h3 { font-size: 19px; font-weight: 750; margin: 14px 0 8px; }
+  .servicio p { color: var(--gris); font-size: 13.5px; margin-bottom: 20px; }
+  .servicio .precio { font-size: 14px; font-weight: 700; }
+  .servicio .precio span { color: var(--oro); }
 
-  /* ============ CONTACTO ============ */
-  .contacto { padding: 140px 24px 120px; text-align: center; position: relative; overflow: hidden; }
-  .contacto img.fondo {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35;
+  /* ============ COLECCIÓN ============ */
+  .postres { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .postres a { display: block; overflow: hidden; border-radius: 16px; border: 1px solid var(--linea); }
+  .postres img { width: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; transition: transform 0.7s ease; }
+  .postres a:hover img { transform: scale(1.05); }
+
+  /* ============ CTA FINAL ============ */
+  .final {
+    text-align: center;
+    padding: 130px 30px 120px;
+    position: relative; overflow: hidden;
   }
-  .contacto .velo { position: absolute; inset: 0; background: linear-gradient(180deg, var(--negro), rgba(8,9,11,0.55) 50%, var(--negro)); }
-  .contacto .interior { position: relative; z-index: 2; }
-  .contacto h2 { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: clamp(32px, 6vw, 60px); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px; }
-  .contacto p { color: var(--marfil-dim); margin-bottom: 40px; letter-spacing: 0.06em; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 12px;
-    padding: 18px 46px;
-    font-size: 12px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--negro); background: var(--marfil);
-    text-decoration: none;
-    transition: background 0.25s ease, transform 0.15s ease;
-  }
-  .btn:hover { background: #fff; }
-  .btn:active { transform: scale(0.97); }
+  .final img.fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.28; }
+  .final .velo { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 80% at 50% 100%, rgba(10,10,12,0.4), var(--fondo) 75%); }
+  .final .interior { position: relative; z-index: 2; }
+  .final h2 { font-size: clamp(32px, 5.4vw, 58px); margin-bottom: 14px; }
+  .final p { color: var(--gris); margin-bottom: 36px; }
+  .final .cta-row { justify-content: center; }
+  .pill.wa { background: #25d366; color: #06130a; }
 
   footer {
-    border-top: 1px solid var(--linea-osc);
-    padding: 40px 24px 54px;
-    text-align: center;
+    border-top: 1px solid var(--linea);
+    padding: 36px 30px 50px;
+    display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;
+    max-width: 1240px; margin: 0 auto;
+    font-size: 12.5px; color: var(--gris);
   }
-  footer img { height: 26px; filter: invert(1); opacity: 0.9; margin-bottom: 16px; }
-  footer .leyenda { font-size: 11.5px; color: var(--marfil-dim); letter-spacing: 0.08em; line-height: 2; }
+  footer .marca img { height: 20px; }
+  footer a { color: var(--gris); text-decoration: none; }
+  footer a:hover { color: var(--blanco); }
 
   /* ============ LIGHTBOX ============ */
   #lightbox {
     position: fixed; inset: 0; z-index: 90;
-    background: rgba(8,9,11,0.93);
+    background: rgba(6,6,7,0.94);
     display: none; align-items: center; justify-content: center;
-    padding: 30px;
-    cursor: zoom-out;
+    padding: 30px; cursor: zoom-out;
   }
   #lightbox.abierto { display: flex; }
-  #lightbox img { max-width: min(92vw, 640px); max-height: 90vh; object-fit: contain; box-shadow: 0 30px 90px rgba(0,0,0,0.7); }
+  #lightbox img { max-width: min(92vw, 620px); max-height: 90vh; object-fit: contain; border-radius: 12px; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
-    .hero-abajo h1, .hero-abajo .lema { opacity: 1; }
     .revelar { opacity: 1; transform: none; }
   }
 </style>
@@ -217,135 +230,167 @@
   </a>
   <div class="links">
     <a href="#flota">La flota</a>
+    <a href="#fundadores">Fundadores</a>
+    <a href="#digital">Servicios</a>
     <a href="#coleccion">Colección</a>
-    <a href="#digital">División digital</a>
-    <a href="#contacto">Contacto</a>
   </div>
+  <a class="pill" href="https://wa.me/528444511106" rel="noopener">Hablemos</a>
 </nav>
 
 <header class="hero">
-  <video autoplay muted playsinline id="videoLogo">
-    <source src="assets/logo-reveal.mp4" type="video/mp4">
-  </video>
-  <div class="velo"></div>
-  <div class="hero-abajo">
-    <div class="emblema3d" id="emblemaHero"></div>
-    <h1>Velorian Industries</h1>
-    <div class="lema">Diseño de autor · Saltillo, México</div>
+  <div>
+    <div class="chip">Velorian Industries · Saltillo, México</div>
+    <h1>Ingeniería <b>audaz</b> para un mundo que <b>apenas viene</b>.</h1>
+    <p class="baja">Diseñamos hipervehículos de autor y construimos la tecnología digital que hace crecer negocios reales — con la misma obsesión por el detalle.</p>
+    <div class="cta-row">
+      <a class="pill" href="#flota">Conocer la flota</a>
+      <a class="pill fantasma" href="#digital">Servicios digitales</a>
+    </div>
   </div>
+  <div id="escena3d" aria-hidden="true"></div>
 </header>
 
-<section class="intro">
-  <div class="revelar">
-    <p>Cinco máquinas. Un solo lenguaje: <em>la forma sigue a la ambición.</em></p>
-    <div class="firma">Santiago Cernuda · Ricardo Treviño — Fundadores</div>
-  </div>
-</section>
-
-<div id="flota">
-  <section class="modelo" data-video>
-    <video muted loop playsinline preload="metadata"><source src="assets/gheopardo.mp4" type="video/mp4"></video>
-    <div class="velo"></div>
-    <div class="contenido">
-      <div>
-        <span class="idx">01 / Hypercar</span>
-        <h2>Gheopardo</h2>
-        <div class="clase">El depredador de la casa</div>
-        <button class="ficha-btn" data-poster="assets/poster-gheopardo.jpg">Ver ficha de colección</button>
-      </div>
-      <div class="specs">
-        <div class="spec"><b>1,700</b><span>HP</span></div>
-        <div class="spec"><b>3,500</b><span>Nm</span></div>
-        <div class="spec"><b>&lt;2 s</b><span>0–100</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="modelo" data-video>
-    <video muted loop playsinline preload="metadata"><source src="assets/lafroditha.mp4" type="video/mp4"></video>
-    <div class="velo"></div>
-    <div class="contenido">
-      <div>
-        <span class="idx">02 / Grand Hybrid</span>
-        <h2>Lafroditha</h2>
-        <div class="clase">La elegancia hecha máquina</div>
-        <button class="ficha-btn" data-poster="assets/poster-lafroditha.jpg">Ver ficha de colección</button>
-      </div>
-      <div class="specs">
-        <div class="spec"><b>V12</b><span>Híbrido</span></div>
-        <div class="spec"><b>1,250+</b><span>HP</span></div>
-        <div class="spec"><b>1 / 50</b><span>Collector</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="modelo" data-video>
-    <video muted loop playsinline preload="metadata"><source src="assets/scorpion.mp4" type="video/mp4"></video>
-    <div class="velo"></div>
-    <div class="contenido">
-      <div>
-        <span class="idx">03 / Gran turismo</span>
-        <h2>Scorpion RS</h2>
-        <div class="clase">Nacido para la pista</div>
-        <button class="ficha-btn" data-poster="assets/poster-scorpion.jpg">Ver ficha de colección</button>
-      </div>
-      <div class="specs">
-        <div class="spec"><b>Twin</b><span>Turbo</span></div>
-        <div class="spec"><b>Activa</b><span>Aerodinámica</span></div>
-        <div class="spec"><b>4-Tip</b><span>Escape central</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="modelo" data-video>
-    <video muted loop playsinline preload="metadata"><source src="assets/golondrina.mp4" type="video/mp4"></video>
-    <div class="velo"></div>
-    <div class="contenido">
-      <div>
-        <span class="idx">04 / VTOL</span>
-        <h2>La Golondrina</h2>
-        <div class="clase">El primer Velorian que no toca el suelo</div>
-        <button class="ficha-btn" data-poster="assets/poster-golondrina.jpg">Ver ficha de colección</button>
-      </div>
-      <div class="specs">
-        <div class="spec"><b>1,400</b><span>HP</span></div>
-        <div class="spec"><b>480</b><span>km/h</span></div>
-        <div class="spec"><b>EDF</b><span>Propulsión distribuida</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="modelo" data-video>
-    <video muted loop playsinline preload="metadata"><source src="assets/arelios.mp4" type="video/mp4"></video>
-    <div class="velo"></div>
-    <div class="contenido">
-      <div>
-        <span class="idx">05 / Multimodal</span>
-        <h2>Arelios</h2>
-        <div class="clase">Tierra. Agua. Profundidad.</div>
-        <button class="ficha-btn" data-poster="assets/poster-arelios.jpg">Ver ficha de colección</button>
-      </div>
-      <div class="specs">
-        <div class="spec"><b>100 m</b><span>Prof. máx</span></div>
-        <div class="spec"><b>3</b><span>Medios</span></div>
-        <div class="spec"><b>4.2 °C</b><span>H₂O op.</span></div>
-      </div>
-    </div>
-  </section>
+<div class="metricas">
+  <div class="metrica"><b>5</b><span>Vehículos de autor</span></div>
+  <div class="metrica"><b>1,700 HP</b><span>Nuestro tope — Gheopardo</span></div>
+  <div class="metrica"><b>480 km/h</b><span>La Golondrina en vuelo</span></div>
+  <div class="metrica"><b>100 m</b><span>Arelios bajo el agua</span></div>
 </div>
 
-<section class="divisor">
-  <div class="revelar">
-    <div class="lienzo-wrap" id="emblemaGrande"></div>
-    <h3>El emblema</h3>
-    <p>Arrástrelo — está tallado en 3D</p>
+<section id="flota">
+  <div class="cabeza revelar">
+    <div class="chip">La flota</div>
+    <h2>Cinco máquinas. <b>Un solo lenguaje.</b></h2>
+    <p>Conceptos en desarrollo activo con solicitudes de patente en proceso. Toque cualquier ficha para ver su edición de colección.</p>
+  </div>
+  <div class="flota-grid">
+    <div class="modelo revelar" data-video>
+      <video muted loop playsinline preload="metadata"><source src="assets/gheopardo.mp4" type="video/mp4"></video>
+      <div class="velo"></div>
+      <button class="ficha" data-poster="assets/poster-gheopardo.jpg">Ficha de colección</button>
+      <div class="contenido">
+        <div><span class="tag">01 · Hypercar</span><h3>Gheopardo</h3></div>
+        <div class="specs">
+          <div class="spec"><b>1,700</b><span>HP</span></div>
+          <div class="spec"><b>3,500</b><span>Nm</span></div>
+          <div class="spec"><b>&lt;2 s</b><span>0–100</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="modelo revelar" data-video>
+      <video muted loop playsinline preload="metadata"><source src="assets/lafroditha.mp4" type="video/mp4"></video>
+      <div class="velo"></div>
+      <button class="ficha" data-poster="assets/poster-lafroditha.jpg">Ficha de colección</button>
+      <div class="contenido">
+        <div><span class="tag">02 · Grand Hybrid</span><h3>Lafroditha</h3></div>
+        <div class="specs">
+          <div class="spec"><b>V12</b><span>Híbrido</span></div>
+          <div class="spec"><b>1,250+</b><span>HP</span></div>
+          <div class="spec"><b>1/50</b><span>Collector</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="modelo revelar" data-video>
+      <video muted loop playsinline preload="metadata"><source src="assets/scorpion.mp4" type="video/mp4"></video>
+      <div class="velo"></div>
+      <button class="ficha" data-poster="assets/poster-scorpion.jpg">Ficha de colección</button>
+      <div class="contenido">
+        <div><span class="tag">03 · Gran turismo</span><h3>Scorpion RS</h3></div>
+        <div class="specs">
+          <div class="spec"><b>Twin</b><span>Turbo</span></div>
+          <div class="spec"><b>Aero</b><span>Activa</span></div>
+          <div class="spec"><b>4-Tip</b><span>Escape</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="modelo revelar" data-video>
+      <video muted loop playsinline preload="metadata"><source src="assets/golondrina.mp4" type="video/mp4"></video>
+      <div class="velo"></div>
+      <button class="ficha" data-poster="assets/poster-golondrina.jpg">Ficha de colección</button>
+      <div class="contenido">
+        <div><span class="tag">04 · VTOL</span><h3>La Golondrina</h3></div>
+        <div class="specs">
+          <div class="spec"><b>1,400</b><span>HP</span></div>
+          <div class="spec"><b>480</b><span>km/h</span></div>
+          <div class="spec"><b>EDF</b><span>Distribuido</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="modelo revelar" data-video>
+      <video muted loop playsinline preload="metadata"><source src="assets/arelios.mp4" type="video/mp4"></video>
+      <div class="velo"></div>
+      <button class="ficha" data-poster="assets/poster-arelios.jpg">Ficha de colección</button>
+      <div class="contenido">
+        <div><span class="tag">05 · Multimodal</span><h3>Arelios</h3></div>
+        <div class="specs">
+          <div class="spec"><b>100 m</b><span>Prof. máx</span></div>
+          <div class="spec"><b>3</b><span>Medios</span></div>
+          <div class="spec"><b>4.2°C</b><span>H₂O</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="coleccion" id="coleccion">
+<section id="fundadores">
   <div class="cabeza revelar">
-    <span class="idx">La colección</span>
-    <h2>Ediciones de autor</h2>
+    <div class="chip">Fundadores</div>
+    <h2>Los que <b>firman</b> cada máquina.</h2>
+  </div>
+  <div class="fundadores-grid revelar">
+    <div class="fundador">
+      <div class="retrato">SC</div>
+      <h3>Santiago Cernuda</h3>
+      <div class="rol">Cofundador · Diseño e ingeniería</div>
+      <p>Diseña la flota y construye los sistemas — del CAD a la inteligencia artificial que opera Velorian.</p>
+    </div>
+    <div class="fundador">
+      <div class="retrato">RT</div>
+      <h3>Ricardo Treviño</h3>
+      <div class="rol">Cofundador · Estrategia comercial</div>
+      <p>La otra mitad de la sociedad desde el principio. Ventas, alianzas y la visión de negocio.</p>
+    </div>
+  </div>
+</section>
+
+<section id="digital">
+  <div class="cabeza revelar">
+    <div class="chip">División digital</div>
+    <h2>La misma ingeniería, <b>para tu negocio.</b></h2>
+    <p>El equipo que diseña estas máquinas construye presencia digital que no se parece a nada de lo que tiene tu competencia.</p>
+  </div>
+  <div class="servicios-grid revelar">
+    <div class="servicio">
+      <span class="n">01</span>
+      <h3>Páginas web de autor</h3>
+      <p>Te mostramos tu sitio funcionando antes de que pagues un peso.</p>
+      <div class="precio">Desde <span>$8,000 MXN</span></div>
+    </div>
+    <div class="servicio">
+      <span class="n">02</span>
+      <h3>Experiencias premium 3D</h3>
+      <p>Sitios como este — 3D interactivo, video y dirección de arte.</p>
+      <div class="precio">Desde <span>$15,000 MXN</span></div>
+    </div>
+    <div class="servicio">
+      <span class="n">03</span>
+      <h3>Bots de WhatsApp con IA</h3>
+      <p>Tu negocio responde solo, las 24 horas, con inteligencia real.</p>
+      <div class="precio"><span>$2,000</span> + $500/mes</div>
+    </div>
+    <div class="servicio">
+      <span class="n">04</span>
+      <h3>Contenido con IA</h3>
+      <p>Video e imagen de última generación para tu marca, todos los días.</p>
+      <div class="precio">Planes <span>a medida</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="coleccion">
+  <div class="cabeza revelar">
+    <div class="chip">La colección</div>
+    <h2>Ediciones <b>de autor.</b></h2>
   </div>
   <div class="postres revelar">
     <a href="#" data-poster="assets/poster-gheopardo.jpg"><img src="assets/poster-gheopardo.jpg" alt="Póster Gheopardo" loading="lazy"></a>
@@ -356,49 +401,27 @@
   </div>
 </section>
 
-<section class="digital" id="digital">
-  <div class="interior revelar">
-    <span class="idx">División digital</span>
-    <h2>La misma ingeniería, para tu negocio</h2>
-    <p class="sub">El equipo que diseña estas máquinas construye tecnología para negocios reales de Saltillo y de cualquier lugar: presencia digital que se ve como nada de lo que tiene tu competencia.</p>
-    <div class="filas">
-      <div class="fila">
-        <div><h3>Páginas web de autor</h3><p>Te mostramos tu sitio funcionando antes de que pagues un peso.</p></div>
-        <div class="precio">Desde <span>$8,000 MXN</span></div>
-      </div>
-      <div class="fila">
-        <div><h3>Experiencias premium 3D</h3><p>Sitios como este — video, 3D interactivo y dirección de arte.</p></div>
-        <div class="precio">Desde <span>$15,000 MXN</span></div>
-      </div>
-      <div class="fila">
-        <div><h3>Bots de WhatsApp con IA</h3><p>Tu negocio responde solo, las 24 horas, con inteligencia real.</p></div>
-        <div class="precio"><span>$2,000</span> + $500/mes</div>
-      </div>
-      <div class="fila">
-        <div><h3>Contenido con IA</h3><p>Video e imagen de última generación para tu marca, todos los días.</p></div>
-        <div class="precio">Planes <span>a medida</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="contacto" id="contacto">
+<div class="final">
   <img class="fondo" src="assets/hypercar-tunel.png" alt="" loading="lazy">
   <div class="velo"></div>
   <div class="interior revelar">
-    <h2>Hablemos</h2>
-    <p>Cuéntanos qué quieres construir.</p>
-    <a class="btn" href="mailto:luisantiago.gonzalez5@gmail.com">Escríbenos</a>
+    <div class="chip">Contacto</div>
+    <h2>Construyamos <b>lo que sigue.</b></h2>
+    <p>Respondemos rápido — cuéntanos qué traes en mente.</p>
+    <div class="cta-row">
+      <a class="pill wa" href="https://wa.me/528444511106" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.79h-.01a9.9 9.9 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 7 2.9 9.83 9.83 0 0 1 2.89 7c0 5.45-4.44 9.88-9.9 9.88m8.42-18.3A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.33.16 11.89c0 2.1.55 4.14 1.59 5.94L.06 24l6.33-1.66a11.9 11.9 0 0 0 5.66 1.44h.01c6.55 0 11.89-5.33 11.89-11.89 0-3.18-1.24-6.16-3.48-8.4"/></svg>
+        WhatsApp directo
+      </a>
+      <a class="pill fantasma" href="mailto:velorian.industries@gmail.com">velorian.industries@gmail.com</a>
+    </div>
   </div>
-</section>
+</div>
 
 <footer>
-  <img src="assets/wordmark-star.jpg" alt="Velorian Industries">
-  <div class="leyenda">
-    VELORIAN INDUSTRIES · Saltillo, Coahuila, México<br>
-    Fundada por Santiago Cernuda y Ricardo Treviño · © 2026<br>
-    Los vehículos mostrados son conceptos de diseño en desarrollo.
-  </div>
+  <a class="marca" href="#"><img src="assets/wordmark-star.jpg" alt="" style="filter:invert(1)"><span style="font-size:12px;letter-spacing:0.18em;font-weight:700">VELORIAN</span></a>
+  <div>Saltillo, Coahuila, México · <a href="https://wa.me/528444511106">+52 844 451 1106</a> · <a href="mailto:velorian.industries@gmail.com">velorian.industries@gmail.com</a></div>
+  <div>© 2026 · Conceptos de diseño en desarrollo</div>
 </footer>
 
 <div id="lightbox" role="dialog" aria-label="Ficha de colección"><img src="" alt="Ficha de colección"></div>
@@ -407,9 +430,6 @@
 <script>
 (function () {
   var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var vLogo = document.getElementById('videoLogo');
-  vLogo.addEventListener('ended', function () { vLogo.pause(); });
 
   var obs = new IntersectionObserver(function (es) {
     es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visto'); obs.unobserve(e.target); } });
@@ -425,7 +445,6 @@
   }, { threshold: 0.3 });
   document.querySelectorAll('[data-video]').forEach(function (el) { obsVid.observe(el); });
 
-  // Lightbox de fichas de colección
   var lb = document.getElementById('lightbox');
   var lbImg = lb.querySelector('img');
   document.querySelectorAll('[data-poster]').forEach(function (el) {
@@ -438,88 +457,102 @@
   lb.addEventListener('click', function () { lb.classList.remove('abierto'); });
   window.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.classList.remove('abierto'); });
 
-  // ============ EMBLEMA 3D (Three.js): estrella de 4 puntas cromada ============
+  // ==========================================================================
+  // TARJETA 3D EN CAPAS (como la referencia: stack explotado flotando)
+  // 4 placas metálicas redondeadas apiladas en isométrico; la de arriba lleva
+  // el emblema Velorian como textura. Flotan, respiran (se separan y juntan)
+  // y hacen parallax con el mouse.
+  // ==========================================================================
   if (typeof THREE === 'undefined') return;
+  var cont = document.getElementById('escena3d');
+  if (!cont) return;
 
-  function estrella4(radioLargo, radioCorto) {
-    var forma = new THREE.Shape();
-    for (var i = 0; i < 8; i++) {
-      var ang = (Math.PI / 4) * i - Math.PI / 2;
-      var r = (i % 2 === 0) ? radioLargo : radioCorto;
-      var x = Math.cos(ang) * r, y = Math.sin(ang) * r;
-      if (i === 0) forma.moveTo(x, y); else forma.lineTo(x, y);
-    }
-    forma.closePath();
-    return forma;
+  var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(cont.clientWidth, cont.clientHeight);
+  cont.appendChild(renderer.domElement);
+
+  var escena = new THREE.Scene();
+  var camara = new THREE.PerspectiveCamera(35, cont.clientWidth / cont.clientHeight, 0.1, 60);
+  camara.position.set(0, 0, 11);
+
+  function placaRedonda(ancho, alto, radio, grosor) {
+    var s = new THREE.Shape();
+    var w = ancho / 2, h = alto / 2, r = radio;
+    s.moveTo(-w + r, -h);
+    s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r);
+    s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h);
+    s.lineTo(-w + r, h); s.quadraticCurveTo(-w, h, -w, h - r);
+    s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h);
+    return new THREE.ExtrudeGeometry(s, { depth: grosor, bevelEnabled: true, bevelThickness: 0.045, bevelSize: 0.045, bevelSegments: 3 });
   }
 
-  function montarEmblema(idContenedor, opciones) {
-    var cont = document.getElementById(idContenedor);
-    if (!cont) return;
-    var ancho = cont.clientWidth, alto = cont.clientHeight;
-    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(ancho, alto);
-    cont.appendChild(renderer.domElement);
+  var grupo = new THREE.Group();
+  escena.add(grupo);
 
-    var escena = new THREE.Scene();
-    var camara = new THREE.PerspectiveCamera(42, ancho / alto, 0.1, 50);
-    camara.position.z = 6.2;
-
-    var geo = new THREE.ExtrudeGeometry(estrella4(2.1, 0.62), {
-      depth: 0.42, bevelEnabled: true, bevelThickness: 0.22, bevelSize: 0.16, bevelSegments: 5
-    });
-    geo.center();
-    var mat = new THREE.MeshStandardMaterial({
-      color: opciones.color, metalness: 0.95, roughness: 0.22,
-      emissive: opciones.emisivo, emissiveIntensity: 0.06
-    });
-    var emblema = new THREE.Mesh(geo, mat);
-    escena.add(emblema);
-
-    var luz1 = new THREE.DirectionalLight(0xffffff, 2.4); luz1.position.set(3, 4, 5); escena.add(luz1);
-    var luz2 = new THREE.DirectionalLight(opciones.luzFria, 1.3); luz2.position.set(-4, -2, 3); escena.add(luz2);
-    escena.add(new THREE.AmbientLight(0xffffff, 0.35));
-
-    var giro = { x: 0.35, y: 0 }, objetivo = { x: 0.35, y: 0 };
-    var arrastrando = false, previo = { x: 0, y: 0 };
-
-    if (opciones.arrastrable) {
-      cont.addEventListener('pointerdown', function (e) { arrastrando = true; previo = { x: e.clientX, y: e.clientY }; });
-      window.addEventListener('pointerup', function () { arrastrando = false; });
-      window.addEventListener('pointermove', function (e) {
-        if (!arrastrando) return;
-        objetivo.y += (e.clientX - previo.x) * 0.011;
-        objetivo.x += (e.clientY - previo.y) * 0.011;
-        previo = { x: e.clientX, y: e.clientY };
-      }, { passive: true });
-    } else {
-      window.addEventListener('pointermove', function (e) {
-        objetivo.y = (e.clientX / window.innerWidth - 0.5) * 1.4;
-        objetivo.x = 0.35 + (e.clientY / window.innerHeight - 0.5) * 0.8;
-      }, { passive: true });
-    }
-
-    function cuadro() {
-      requestAnimationFrame(cuadro);
-      if (!reducido && !arrastrando && opciones.giroLento) objetivo.y += 0.0035;
-      giro.x += (objetivo.x - giro.x) * 0.06;
-      giro.y += (objetivo.y - giro.y) * 0.06;
-      emblema.rotation.x = giro.x;
-      emblema.rotation.y = giro.y;
-      renderer.render(escena, camara);
-    }
-    cuadro();
-
-    window.addEventListener('resize', function () {
-      var a = cont.clientWidth, h = cont.clientHeight;
-      camara.aspect = a / h; camara.updateProjectionMatrix();
-      renderer.setSize(a, h);
-    });
+  var tonos = [0x121216, 0x1b1b21, 0x26262d, 0x111114];
+  var capas = [];
+  for (var i = 0; i < 4; i++) {
+    var geo = placaRedonda(4.6 - i * 0.28, 3.1 - i * 0.2, 0.42, 0.12);
+    var mat = new THREE.MeshStandardMaterial({ color: tonos[i], metalness: 0.85, roughness: 0.32 });
+    var m = new THREE.Mesh(geo, mat);
+    m.userData.nivel = i;
+    grupo.add(m);
+    capas.push(m);
   }
 
-  montarEmblema('emblemaHero', { color: 0xd8d6cf, emisivo: 0xb99a5b, luzFria: 0x8899bb, giroLento: true, arrastrable: false });
-  montarEmblema('emblemaGrande', { color: 0x8b8983, emisivo: 0x443311, luzFria: 0x667799, giroLento: true, arrastrable: true });
+  // Emblema Velorian sobre la placa superior
+  new THREE.TextureLoader().load('assets/emblema.png', function (tex) {
+    tex.colorSpace = THREE.SRGBColorSpace;
+    var plano = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.7, 2.2),
+      new THREE.MeshStandardMaterial({ map: tex, transparent: false, metalness: 0.4, roughness: 0.5 })
+    );
+    plano.userData.nivel = 3.01;
+    grupo.add(plano);
+    capas.push(plano);
+  });
+
+  var luzPrincipal = new THREE.DirectionalLight(0xffffff, 2.6); luzPrincipal.position.set(4, 6, 6); escena.add(luzPrincipal);
+  var luzOro = new THREE.DirectionalLight(0xd4b36a, 0.9); luzOro.position.set(-5, -3, 4); escena.add(luzOro);
+  escena.add(new THREE.AmbientLight(0xffffff, 0.4));
+
+  // pose isométrica como la referencia
+  grupo.rotation.set(-0.52, 0.0, -0.35);
+
+  var mouse = { x: 0, y: 0 }, objetivo = { x: 0, y: 0 };
+  window.addEventListener('pointermove', function (e) {
+    objetivo.x = (e.clientX / window.innerWidth - 0.5) * 2;
+    objetivo.y = (e.clientY / window.innerHeight - 0.5) * 2;
+  }, { passive: true });
+
+  window.addEventListener('resize', function () {
+    camara.aspect = cont.clientWidth / cont.clientHeight;
+    camara.updateProjectionMatrix();
+    renderer.setSize(cont.clientWidth, cont.clientHeight);
+  });
+
+  var t = 0;
+  function cuadro() {
+    requestAnimationFrame(cuadro);
+    t += reducido ? 0 : 0.011;
+    mouse.x += (objetivo.x - mouse.x) * 0.05;
+    mouse.y += (objetivo.y - mouse.y) * 0.05;
+
+    // respiración: las capas se separan y se vuelven a juntar
+    var separacion = 0.34 + Math.sin(t * 0.8) * 0.22;
+    capas.forEach(function (c) {
+      var n = c.userData.nivel;
+      c.position.z = n * separacion + (n > 3 ? 0.09 : 0);
+    });
+
+    grupo.rotation.x = -0.52 + mouse.y * 0.16;
+    grupo.rotation.y = mouse.x * 0.3;
+    grupo.position.y = Math.sin(t * 0.6) * 0.16;
+
+    renderer.render(escena, camara);
+  }
+  cuadro();
 })();
 </script>
 
